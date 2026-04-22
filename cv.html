@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV — Ichraq Elhantati</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 10pt;
+    color: #2e2e2e;
+    background: #fff;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 0;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: #1a0050;
+    color: #e8e0ff;
+    padding: 28px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 auto 8px;
+    border: 3px solid rgba(255,255,255,0.3);
+    overflow: hidden;
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 50%;
+  }
+
+  .sidebar-name {
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14pt;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .sidebar-title {
+    text-align: center;
+    font-size: 8.5pt;
+    color: #c4b5fd;
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  .sidebar-section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9pt;
+    font-weight: 700;
+    color: #a78bfa;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(167,139,250,0.3);
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 8.5pt;
+    color: #ddd6fe;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+
+  .contact-icon {
+    color: #a78bfa;
+    font-size: 10pt;
+    min-width: 16px;
+    margin-top: 1px;
+  }
+
+  .contact-item a {
+    color: #ddd6fe;
+    text-decoration: none;
+  }
+
+  /* Formation sidebar */
+  .edu-item {
+    margin-bottom: 12px;
+  }
+
+  .edu-school {
+    font-weight: 600;
+    font-size: 8.5pt;
+    color: #fff;
+  }
+
+  .edu-degree {
+    font-size: 8pt;
+    color: #c4b5fd;
+    margin-top: 2px;
+  }
+
+  .edu-date {
+    font-size: 7.5pt;
+    color: #8b70d8;
+    margin-top: 2px;
+  }
+
+  .aba-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+    color: #fff;
+    font-size: 7pt;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 10px;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Tags */
+  .tags-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+
+  .tag {
+    background: rgba(139,92,246,0.25);
+    color: #ddd6fe;
+    border: 1px solid rgba(139,92,246,0.4);
+    border-radius: 4px;
+    font-size: 7.5pt;
+    padding: 2px 7px;
+    font-family: 'Inter', monospace;
+  }
+
+  /* Languages */
+  .lang-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+
+  .lang-name {
+    font-size: 8.5pt;
+    color: #ddd6fe;
+  }
+
+  .lang-dots {
+    display: flex;
+    gap: 3px;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+  }
+
+  .dot.filled {
+    background: #a78bfa;
+  }
+
+  /* Soft skills */
+  .softskill {
+    font-size: 8pt;
+    color: #c4b5fd;
+    padding: 2px 0;
+  }
+
+  .softskill::before {
+    content: "▸ ";
+    color: #a78bfa;
+  }
+
+  /* ── MAIN ── */
+  .main {
+    padding: 28px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .main-section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: #1a0050;
+    border-bottom: 2px solid #8b5cf6;
+    padding-bottom: 4px;
+    margin-bottom: 12px;
+  }
+
+  .exp-item {
+    margin-bottom: 14px;
+    padding-left: 14px;
+    border-left: 2px solid #e9d5ff;
+    position: relative;
+  }
+
+  .exp-item::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8b5cf6;
+  }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .exp-role {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 9.5pt;
+    color: #1a0050;
+  }
+
+  .exp-company {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: #6d28d9;
+    margin-top: 1px;
+  }
+
+  .exp-date {
+    font-size: 8pt;
+    color: #888;
+    white-space: nowrap;
+    background: #f3f0ff;
+    padding: 2px 7px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .exp-desc {
+    margin-top: 5px;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .exp-desc li {
+    font-size: 8.5pt;
+    color: #444;
+    padding: 1px 0;
+    padding-left: 12px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .exp-desc li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #8b5cf6;
+    font-weight: 700;
+  }
+
+  .stack-line {
+    font-size: 8pt;
+    color: #6d28d9;
+    margin-top: 4px;
+    font-style: italic;
+  }
+
+  .pro-badge {
+    display: inline-block;
+    background: #dbeafe;
+    color: #1d4ed8;
+    font-size: 7pt;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* Projects grid */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .project-card {
+    border: 1px solid #e9d5ff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    background: #faf5ff;
+  }
+
+  .project-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 9pt;
+    color: #1a0050;
+  }
+
+  .project-desc {
+    font-size: 8pt;
+    color: #555;
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 6px;
+  }
+
+  .project-tag {
+    background: #ede9fe;
+    color: #5b21b6;
+    border-radius: 3px;
+    font-size: 7pt;
+    padding: 1px 6px;
+  }
+
+  /* Profile */
+  .profile-box {
+    background: linear-gradient(135deg, #f5f3ff, #eff6ff);
+    border-left: 3px solid #8b5cf6;
+    border-radius: 0 8px 8px 0;
+    padding: 12px 14px;
+    margin-bottom: 4px;
+  }
+
+  .profile-text {
+    font-size: 8.5pt;
+    color: #374151;
+    line-height: 1.6;
+  }
+
+  @media print {
+    body { margin: 0; }
+    .page { width: 210mm; margin: 0; }
+    @page { margin: 0; size: A4; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══════════════ SIDEBAR ══════════════ -->
+  <aside class="sidebar">
+
+    <div>
+      <div class="avatar">
+        <img src="cv-photo.jpg" alt="Ichraq Elhantati" onerror="this.style.display='none'; this.parentNode.innerHTML='IE';" />
+      </div>
+      <div class="sidebar-name">ICHRAQ<br>ELHANTATI</div>
+      <div class="sidebar-title">Développeuse Full-Stack<br>IA &amp; Automatisation</div>
+    </div>
+
+    <!-- Contact -->
+    <div>
+      <div class="sidebar-section-title">Contact</div>
+      <div class="contact-item">
+        <span class="contact-icon">✉</span>
+        <a href="mailto:elhantatiichraq16@gmail.com">elhantatiichraq16@gmail.com</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">📍</span>
+        <span>Rabat-Salé-Zemmour-Zaër, Maroc</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">💼</span>
+        <a href="https://linkedin.com/in/ichraq-elhantati">linkedin.com/in/ichraq-elhantati</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">🐙</span>
+        <a href="https://github.com/elhantatiichraq16-web">github.com/elhantatiichraq16-web</a>
+      </div>
+      <div class="contact-item">
+        <span class="contact-icon">🌐</span>
+        <a href="https://elhantatiichraq16-web.github.io">elhantatiichraq16-web.github.io</a>
+      </div>
+    </div>
+
+    <!-- Formation -->
+    <div>
+      <div class="sidebar-section-title">Formation</div>
+
+      <div class="edu-item">
+        <div class="edu-school">ABA Technology</div>
+        <div class="edu-degree">IA &amp; Automatisation (AOT)</div>
+        <div class="edu-date">2025 – 2026</div>
+        <div><span class="aba-badge">⭐ 8 mois • Formation intensive</span></div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-school">ENSA Kénitra</div>
+        <div class="edu-degree">Licence — Génie Logiciel</div>
+        <div class="edu-date">2025 – En cours</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-school">Ordiciel</div>
+        <div class="edu-degree">Diplôme Développement Informatique</div>
+        <div class="edu-date">2022</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-school">Institut les Nobles</div>
+        <div class="edu-degree">Baccalauréat SVT</div>
+        <div class="edu-date">2019</div>
+      </div>
+    </div>
+
+    <!-- Technologies -->
+    <div>
+      <div class="sidebar-section-title">Technologies</div>
+      <div class="tags-group">
+        <span class="tag">PHP</span>
+        <span class="tag">Symfony</span>
+        <span class="tag">Laravel</span>
+        <span class="tag">Java</span>
+        <span class="tag">Python</span>
+      </div>
+      <div class="tags-group">
+        <span class="tag">JavaScript</span>
+        <span class="tag">HTML5</span>
+        <span class="tag">CSS3</span>
+        <span class="tag">Bootstrap</span>
+      </div>
+      <div class="tags-group">
+        <span class="tag">MySQL</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Doctrine ORM</span>
+      </div>
+      <div class="tags-group">
+        <span class="tag">Django</span>
+        <span class="tag">Machine Learning</span>
+        <span class="tag">Automatisation</span>
+      </div>
+      <div class="tags-group">
+        <span class="tag">Git</span>
+        <span class="tag">GitHub</span>
+        <span class="tag">Composer</span>
+        <span class="tag">Figma</span>
+        <span class="tag">Agile/Scrum</span>
+      </div>
+    </div>
+
+    <!-- Langues -->
+    <div>
+      <div class="sidebar-section-title">Langues</div>
+      <div class="lang-item">
+        <span class="lang-name">Arabe</span>
+        <div class="lang-dots">
+          <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div>
+        </div>
+      </div>
+      <div class="lang-item">
+        <span class="lang-name">Français</span>
+        <div class="lang-dots">
+          <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div>
+        </div>
+      </div>
+      <div class="lang-item">
+        <span class="lang-name">Anglais</span>
+        <div class="lang-dots">
+          <div class="dot filled"></div><div class="dot filled"></div><div class="dot filled"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Soft Skills -->
+    <div>
+      <div class="sidebar-section-title">Soft Skills</div>
+      <div class="softskill">Organisation &amp; rigueur</div>
+      <div class="softskill">Esprit d'équipe</div>
+      <div class="softskill">Adaptabilité</div>
+      <div class="softskill">Esprit critique</div>
+      <div class="softskill">Apprentissage rapide</div>
+    </div>
+
+  </aside>
+
+  <!-- ══════════════ MAIN ══════════════ -->
+  <main class="main">
+
+    <!-- Profil -->
+    <section>
+      <div class="main-section-title">Profil</div>
+      <div class="profile-box">
+        <p class="profile-text">
+          Développeuse Full-Stack passionnée par la création d'applications web performantes et la qualité du code. Expérimentée en <strong>PHP/Symfony, Laravel, Java et Python</strong>, avec une solide maîtrise des bases de données relationnelles. Actuellement en formation intensive de 8 mois en <strong>IA &amp; Automatisation chez ABA Technology</strong>, j'explore le Machine Learning et l'automatisation de processus. Rigoureuse, autonome et orientée résultats, je cherche à intégrer une équipe dynamique pour contribuer à des projets ambitieux.
+        </p>
+      </div>
+    </section>
+
+    <!-- Expérience -->
+    <section>
+      <div class="main-section-title">Expérience Professionnelle</div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Développeuse Symfony <span class="pro-badge">Expérience Pro</span></div>
+            <div class="exp-company">Proxisoft — Rabat</div>
+          </div>
+          <div class="exp-date">Sept – Déc 2025</div>
+        </div>
+        <ul class="exp-desc">
+          <li>Développement d'une application web complète de gestion de factures : création, modification, suivi et tableau de bord clients</li>
+          <li>Conception du schéma de base de données et implémentation des entités avec Doctrine ORM</li>
+          <li>Mise en place de l'authentification, des rôles utilisateurs et des interfaces d'administration</li>
+          <li>Participation aux code reviews et respect des bonnes pratiques MVC</li>
+        </ul>
+        <div class="stack-line">Tech : Symfony, PHP, MySQL, Doctrine ORM, Bootstrap</div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-role">Apprentie Développeuse</div>
+            <div class="exp-company">Université Mohammed V — Rabat</div>
+          </div>
+          <div class="exp-date">Juin – Août 2022</div>
+        </div>
+        <ul class="exp-desc">
+          <li>Développement et maintenance d'applications internes pour la gestion administrative</li>
+          <li>Conception d'interfaces utilisateur et intégration avec la base de données</li>
+        </ul>
+        <div class="stack-line">Tech : Java, HTML/CSS, MySQL</div>
+      </div>
+    </section>
+
+    <!-- Projets -->
+    <section>
+      <div class="main-section-title">Projets Réalisés</div>
+      <div class="projects-grid">
+
+        <div class="project-card" style="border-color:#c4b5fd;">
+          <div class="project-name">🏗️ ERP Multi-modules</div>
+          <div class="project-desc">Système ERP complet : gestion de l'architecture logicielle, ressources humaines, employés, congés et paie</div>
+          <div class="project-tags">
+            <span class="project-tag">Laravel</span>
+            <span class="project-tag">PHP</span>
+            <span class="project-tag">MySQL</span>
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">Bootstrap</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-name">📊 Gestion de Factures</div>
+          <div class="project-desc">Application de création, suivi et tableau de bord des factures (Proxisoft)</div>
+          <div class="project-tags">
+            <span class="project-tag">Symfony</span>
+            <span class="project-tag">PHP</span>
+            <span class="project-tag">Doctrine ORM</span>
+            <span class="project-tag">MySQL</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-name">🦷 Cabinet Dentaire</div>
+          <div class="project-desc">Gestion des patients, plannings et rendez-vous médicaux</div>
+          <div class="project-tags">
+            <span class="project-tag">Symfony</span>
+            <span class="project-tag">PHP</span>
+            <span class="project-tag">MySQL</span>
+            <span class="project-tag">Bootstrap</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-name">🎓 Application École</div>
+          <div class="project-desc">Plateforme de gestion des étudiants, notes et inscriptions</div>
+          <div class="project-tags">
+            <span class="project-tag">Django</span>
+            <span class="project-tag">Python</span>
+            <span class="project-tag">MySQL</span>
+            <span class="project-tag">HTML/CSS</span>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-name">🏦 Comptes Bancaires</div>
+          <div class="project-desc">Application desktop de suivi et gestion des opérations bancaires</div>
+          <div class="project-tags">
+            <span class="project-tag">Java</span>
+            <span class="project-tag">JavaScript</span>
+            <span class="project-tag">HTML/CSS</span>
+          </div>
+        </div>
+
+        <div class="project-card" style="border-color:#a78bfa; background: linear-gradient(135deg, #f5f3ff, #eff6ff);">
+          <div class="project-name">🏥 Smart Hospital Monitor</div>
+          <div class="project-desc">Dashboard IoT temps réel : surveillance hospitalière (température, humidité, pression) via MQTT & ESP32 avec alertes SOS automatiques</div>
+          <div class="project-tags">
+            <span class="project-tag">Python</span>
+            <span class="project-tag">Flask</span>
+            <span class="project-tag">MQTT</span>
+            <span class="project-tag">ESP32</span>
+            <span class="project-tag">SQLite</span>
+          </div>
+        </div>
+
+        <div class="project-card" style="border-color:#06b6d4; background: linear-gradient(135deg, #f0fdff, #eff6ff);">
+          <div class="project-name">🏭 Smart Stock & Storage</div>
+          <div class="project-desc">Monitoring IoT d'entrepôts : suivi des stocks, alertes de seuil critiques et tableau de bord analytique temps réel</div>
+          <div class="project-tags">
+            <span class="project-tag">Node.js</span>
+            <span class="project-tag">Supabase</span>
+            <span class="project-tag">IoT</span>
+            <span class="project-tag">ESP32</span>
+            <span class="project-tag">OpenAI</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+</body>
+</html>
