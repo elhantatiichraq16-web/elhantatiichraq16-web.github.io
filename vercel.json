@@ -1,6 +1,4 @@
 {
-  "buildCommand": "bash build-flutter.sh",
-  "outputDirectory": "build/web",
-  "installCommand": "echo 'skip npm install'",
-  "framework": null
+  "outputDirectory": ".",
+  "buildCommand": "echo ready"
 }
