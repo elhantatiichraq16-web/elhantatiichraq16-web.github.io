@@ -1,0 +1,34 @@
+# Flutter
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+
+# Android
+android/local.properties
+android/.gradle
+android/key.properties
+*.jks
+
+# iOS
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+
+# macOS
+macos/Flutter/GeneratedPluginRegistrant.swift
+
+# Web
+lib/generated_plugin_registrant.dart
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db

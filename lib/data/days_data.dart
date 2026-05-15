@@ -1,0 +1,127 @@
+import '../models/word_model.dart';
+
+const List<WordEntry> daysData = [
+  WordEntry(
+    french: 'Lundi',
+    english: 'Monday',
+    spanish: 'Lunes',
+    example_fr: 'Je travaille le lundi.',
+    example_en: 'I work on Monday.',
+    example_es: 'Trabajo el lunes.',
+  ),
+  WordEntry(
+    french: 'Mardi',
+    english: 'Tuesday',
+    spanish: 'Martes',
+    example_fr: 'Le cours est mardi.',
+    example_en: 'The class is on Tuesday.',
+    example_es: 'La clase es el martes.',
+  ),
+  WordEntry(
+    french: 'Mercredi',
+    english: 'Wednesday',
+    spanish: 'Miércoles',
+    example_fr: 'Mercredi, je reste à la maison.',
+    example_en: 'On Wednesday, I stay home.',
+    example_es: 'El miércoles me quedo en casa.',
+  ),
+  WordEntry(
+    french: 'Jeudi',
+    english: 'Thursday',
+    spanish: 'Jueves',
+    example_fr: 'Nous nous retrouvons jeudi.',
+    example_en: 'We meet on Thursday.',
+    example_es: 'Nos reunimos el jueves.',
+  ),
+  WordEntry(
+    french: 'Vendredi',
+    english: 'Friday',
+    spanish: 'Viernes',
+    example_fr: 'Le vendredi est mon jour préféré.',
+    example_en: 'Friday is my favorite day.',
+    example_es: 'El viernes es mi día favorito.',
+  ),
+  WordEntry(
+    french: 'Samedi',
+    english: 'Saturday',
+    spanish: 'Sábado',
+    example_fr: 'Je fais du sport le samedi.',
+    example_en: 'I do sports on Saturday.',
+    example_es: 'Hago deporte el sábado.',
+  ),
+  WordEntry(
+    french: 'Dimanche',
+    english: 'Sunday',
+    spanish: 'Domingo',
+    example_fr: 'Dimanche est un jour de repos.',
+    example_en: 'Sunday is a day of rest.',
+    example_es: 'El domingo es día de descanso.',
+  ),
+];
+
+const List<WordEntry> monthsData = [
+  WordEntry(french: 'Janvier', english: 'January', spanish: 'Enero'),
+  WordEntry(french: 'Février', english: 'February', spanish: 'Febrero'),
+  WordEntry(french: 'Mars', english: 'March', spanish: 'Marzo'),
+  WordEntry(french: 'Avril', english: 'April', spanish: 'Abril'),
+  WordEntry(french: 'Mai', english: 'May', spanish: 'Mayo'),
+  WordEntry(french: 'Juin', english: 'June', spanish: 'Junio'),
+  WordEntry(french: 'Juillet', english: 'July', spanish: 'Julio'),
+  WordEntry(french: 'Août', english: 'August', spanish: 'Agosto'),
+  WordEntry(french: 'Septembre', english: 'September', spanish: 'Septiembre'),
+  WordEntry(french: 'Octobre', english: 'October', spanish: 'Octubre'),
+  WordEntry(french: 'Novembre', english: 'November', spanish: 'Noviembre'),
+  WordEntry(french: 'Décembre', english: 'December', spanish: 'Diciembre'),
+];
+
+const List<WordEntry> seasonsData = [
+  WordEntry(
+    french: 'Le Printemps',
+    english: 'Spring',
+    spanish: 'La Primavera',
+    example_fr: 'Les fleurs poussent au printemps.',
+    example_en: 'Flowers grow in spring.',
+    example_es: 'Las flores crecen en primavera.',
+  ),
+  WordEntry(
+    french: "L'Été",
+    english: 'Summer',
+    spanish: 'El Verano',
+    example_fr: "Il fait chaud en été.",
+    example_en: "It's hot in summer.",
+    example_es: 'Hace calor en verano.',
+  ),
+  WordEntry(
+    french: "L'Automne",
+    english: 'Autumn / Fall',
+    spanish: 'El Otoño',
+    example_fr: "Les feuilles tombent en automne.",
+    example_en: 'Leaves fall in autumn.',
+    example_es: 'Las hojas caen en otoño.',
+  ),
+  WordEntry(
+    french: "L'Hiver",
+    english: 'Winter',
+    spanish: 'El Invierno',
+    example_fr: "Il neige en hiver.",
+    example_en: 'It snows in winter.',
+    example_es: 'Nieva en invierno.',
+  ),
+];
+
+const List<WordEntry> timeData = [
+  WordEntry(french: 'Aujourd\'hui', english: 'Today', spanish: 'Hoy'),
+  WordEntry(french: 'Demain', english: 'Tomorrow', spanish: 'Mañana'),
+  WordEntry(french: 'Hier', english: 'Yesterday', spanish: 'Ayer'),
+  WordEntry(french: 'Maintenant', english: 'Now', spanish: 'Ahora'),
+  WordEntry(french: 'Plus tard', english: 'Later', spanish: 'Más tarde'),
+  WordEntry(french: 'Tôt', english: 'Early', spanish: 'Temprano'),
+  WordEntry(french: 'Tard', english: 'Late', spanish: 'Tarde'),
+  WordEntry(french: 'Matin', english: 'Morning', spanish: 'Mañana'),
+  WordEntry(french: 'Après-midi', english: 'Afternoon', spanish: 'Tarde'),
+  WordEntry(french: 'Soir', english: 'Evening', spanish: 'Noche'),
+  WordEntry(french: 'Nuit', english: 'Night', spanish: 'Noche'),
+  WordEntry(french: 'Semaine', english: 'Week', spanish: 'Semana'),
+  WordEntry(french: 'Mois', english: 'Month', spanish: 'Mes'),
+  WordEntry(french: 'Année', english: 'Year', spanish: 'Año'),
+];
