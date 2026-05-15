@@ -1,1048 +1,2271 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌍 LinguaLearn - Apprendre l'Anglais & l'Espagnol</title>
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Segoe UI',sans-serif; background:#F5F5F5; color:#333; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ichraq Elhantati — Développeuse Full-Stack & IA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
-/* NAV */
-header { background:linear-gradient(135deg,#2196F3,#42A5F5); color:white; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; box-shadow:0 2px 8px rgba(0,0,0,.2); }
-header h1 { font-size:20px; }
-.nav-btns { display:flex; gap:8px; }
-.nav-btn { background:rgba(255,255,255,.2); border:none; color:white; padding:7px 13px; border-radius:20px; cursor:pointer; font-size:13px; transition:.2s; }
-.nav-btn:hover,.nav-btn.active { background:rgba(255,255,255,.4); font-weight:bold; }
+  <style>
+    /* ─── CSS Variables ─── */
+    :root {
+      --bg-primary:    #0a0a0f;
+      --bg-secondary:  #0d0d1a;
+      --bg-card:       rgba(255,255,255,0.05);
+      --border-card:   rgba(255,255,255,0.10);
+      --violet:        #8b5cf6;
+      --blue:          #3b82f6;
+      --cyan:          #06b6d4;
+      --text-primary:  #f8fafc;
+      --text-muted:    #94a3b8;
+      --gradient-text: linear-gradient(135deg, #8b5cf6, #3b82f6, #06b6d4);
+      --gradient-bg:   linear-gradient(135deg, #8b5cf6 0%, #3b82f6 50%, #06b6d4 100%);
+      --glow-violet:   0 0 30px rgba(139,92,246,0.4);
+      --glow-blue:     0 0 30px rgba(59,130,246,0.4);
+      --glow-cyan:     0 0 30px rgba(6,182,212,0.4);
+    }
 
-/* TABS */
-.tab { display:none; }
-.tab.active { display:block; }
+    /* ─── Light mode ─── */
+    body.light-mode {
+      --bg-primary:   #f0f4ff;
+      --bg-secondary: #e8eeff;
+      --bg-card:      rgba(255,255,255,0.7);
+      --border-card:  rgba(139,92,246,0.2);
+      --text-primary: #0f0f1a;
+      --text-muted:   #4a5568;
+      --glow-violet:  0 0 30px rgba(139,92,246,0.2);
+    }
+    body.light-mode .navbar {
+      background: rgba(240,244,255,0.85);
+      border-bottom-color: rgba(139,92,246,0.15);
+    }
+    body.light-mode .mobile-menu {
+      background: rgba(240,244,255,0.98);
+    }
+    body.light-mode .hero-tech-card,
+    body.light-mode .glass-card {
+      background: rgba(255,255,255,0.8);
+      border-color: rgba(139,92,246,0.2);
+    }
+    body.light-mode .tech-snippet { color: #1e293b; }
+    body.light-mode .cm { color: #64748b; }
+    body.light-mode .kw { color: #7c3aed; }
+    body.light-mode .fn { color: #2563eb; }
+    body.light-mode .str { color: #059669; }
+    body.light-mode .num { color: #dc2626; }
 
-/* HOME */
-.banner { background:linear-gradient(135deg,#1565C0,#2196F3); margin:16px; border-radius:20px; padding:22px; color:white; }
-.banner h2 { font-size:19px; margin-bottom:6px; }
-.banner p { color:rgba(255,255,255,.8); margin-bottom:10px; font-size:14px; }
-.stats { display:flex; gap:8px; flex-wrap:wrap; }
-.stat-chip { background:rgba(255,255,255,.2); border-radius:20px; padding:4px 12px; font-size:12px; }
-.section-title { font-size:17px; font-weight:bold; margin:8px 16px 12px; }
-.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; padding:0 16px 24px; }
-@media(min-width:600px){.grid{grid-template-columns:repeat(3,1fr);}}
-@media(min-width:900px){.grid{grid-template-columns:repeat(4,1fr);}}
-.cat-card { border-radius:16px; padding:16px; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.15); transition:transform .2s; min-height:110px; display:flex; flex-direction:column; justify-content:space-between; }
-.cat-card:hover { transform:translateY(-3px); }
-.cat-icon { font-size:30px; }
-.cat-title { color:white; font-weight:bold; font-size:14px; }
-.cat-sub { color:rgba(255,255,255,.75); font-size:11px; }
+    /* ─── Theme toggle button ─── */
+    .theme-toggle {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 50%;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .theme-toggle:hover {
+      border-color: var(--violet);
+      box-shadow: var(--glow-violet);
+    }
 
-/* MODAL */
-.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:200; overflow-y:auto; }
-.modal-overlay.active { display:block; }
-.modal { background:white; min-height:100vh; display:flex; flex-direction:column; }
-.modal-header { padding:14px 16px; color:white; display:flex; align-items:center; gap:10px; position:sticky; top:0; z-index:10; }
-.modal-header h2 { font-size:17px; flex:1; }
-.back-btn { background:rgba(255,255,255,.25); border:none; color:white; width:34px; height:34px; border-radius:50%; cursor:pointer; font-size:17px; display:flex; align-items:center; justify-content:center; }
-.search-bar { margin:12px 16px; padding:10px 16px; border-radius:30px; border:1px solid #ddd; width:calc(100% - 32px); font-size:14px; outline:none; box-shadow:0 2px 6px rgba(0,0,0,.08); }
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100vw; }
 
-/* WORD CARD */
-.word-card { background:white; margin:8px 16px; border-radius:16px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,.1); }
-.lang-row { display:flex; align-items:center; gap:8px; margin:5px 0; }
-.lang-badge { padding:2px 6px; border-radius:4px; color:white; font-size:11px; font-weight:bold; white-space:nowrap; flex-shrink:0; }
-.lang-text { font-size:15px; font-weight:500; flex:1; }
-.speak-btn { background:none; border:none; cursor:pointer; font-size:20px; padding:2px 6px; border-radius:8px; transition:.2s; flex-shrink:0; }
-.speak-btn:hover { background:#e3f2fd; }
-.speak-btn.speaking { animation:pulse .6s infinite alternate; }
-@keyframes pulse { from{transform:scale(1)} to{transform:scale(1.3)} }
-.divider { border:none; border-top:1px solid #eee; margin:8px 0; }
-.example-box { background:#f5f5f5; border-radius:8px; padding:10px; margin-top:8px; }
-.example-label { font-size:11px; color:#888; font-weight:bold; margin-bottom:4px; }
-.example-line { font-size:12px; margin:3px 0; display:flex; align-items:center; gap:6px; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
 
-/* FILTER */
-.filter-bar { display:flex; gap:8px; padding:0 16px 8px; overflow-x:auto; }
-.filter-chip { padding:5px 12px; border-radius:20px; border:none; background:#eee; cursor:pointer; font-size:12px; white-space:nowrap; }
-.filter-chip.active { background:#2196F3; color:white; }
+    /* ─── Utility ─── */
+    .gradient-text {
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
 
-/* CONJUGATION */
-.verb-card { background:white; margin:8px 16px; border-radius:16px; box-shadow:0 2px 8px rgba(0,0,0,.1); overflow:hidden; }
-.verb-header { padding:14px; display:flex; align-items:center; gap:10px; cursor:pointer; }
-.verb-icon { width:44px; height:44px; background:#8D6E63; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
-.verb-name { font-weight:bold; font-size:15px; }
-.verb-trans { font-size:12px; }
-.verb-body { display:none; padding:0 14px 14px; }
-.verb-body.open { display:block; }
-.tense-title { background:rgba(141,110,99,.15); padding:5px 10px; border-radius:8px; font-size:12px; font-weight:bold; color:#6D4C41; margin:10px 0 6px; }
-.conj-row { display:flex; padding:3px 0; font-size:13px; }
-.conj-pron { flex:2; color:#888; font-weight:600; font-size:12px; }
-.conj-val { flex:3; }
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+    }
 
-/* QUIZ */
-.quiz-wrap { padding:18px; max-width:580px; margin:0 auto; }
-.quiz-progress { height:8px; background:#eee; border-radius:4px; margin-bottom:20px; overflow:hidden; }
-.quiz-bar { height:100%; background:#2196F3; border-radius:4px; transition:width .3s; }
-.q-card { background:#2196F3; color:white; border-radius:18px; padding:22px; text-align:center; margin-bottom:20px; }
-.q-label { font-size:13px; opacity:.8; margin-bottom:8px; }
-.q-word { font-size:24px; font-weight:bold; }
-.opt-btn { width:100%; padding:13px 18px; margin-bottom:10px; border:2px solid #ddd; border-radius:12px; background:white; font-size:14px; cursor:pointer; text-align:left; transition:.15s; display:flex; justify-content:space-between; align-items:center; }
-.opt-btn:hover:not(:disabled) { border-color:#2196F3; background:#E3F2FD; }
-.opt-btn.correct { background:#E8F5E9; border-color:#4CAF50; color:#4CAF50; font-weight:bold; }
-.opt-btn.wrong { background:#FFEBEE; border-color:#F44336; color:#F44336; }
-.feedback { padding:11px; border-radius:12px; text-align:center; font-weight:bold; margin-bottom:14px; display:none; font-size:14px; }
-.feedback.show { display:block; }
-.feedback.good { background:#E8F5E9; color:#4CAF50; }
-.feedback.bad { background:#FFEBEE; color:#F44336; }
-.next-btn { width:100%; padding:13px; background:#2196F3; color:white; border:none; border-radius:12px; font-size:15px; cursor:pointer; display:none; }
-.next-btn.show { display:block; }
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
 
-/* DICTIONNAIRE */
-.dict-wrap { padding:16px; }
-.dict-search { display:flex; gap:10px; margin-bottom:16px; }
-.dict-search input { flex:1; padding:12px 18px; border-radius:30px; border:1px solid #ddd; font-size:15px; outline:none; box-shadow:0 2px 6px rgba(0,0,0,.08); }
-.dict-search button { padding:12px 20px; background:#2196F3; color:white; border:none; border-radius:30px; cursor:pointer; font-size:14px; }
-.dict-result { }
-.dict-card { background:white; border-radius:16px; padding:16px; margin-bottom:12px; box-shadow:0 2px 8px rgba(0,0,0,.1); }
-.dict-word { font-size:20px; font-weight:bold; margin-bottom:4px; }
-.dict-langs { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
-.dict-no-result { text-align:center; color:#999; padding:40px; font-size:15px; }
-.dict-count { font-size:13px; color:#666; margin-bottom:12px; }
+    .section-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 3.5rem;
+    }
 
-/* TRADUCTION */
-.trad-wrap { padding:16px; max-width:700px; margin:0 auto; }
-.trad-wrap h2 { font-size:18px; font-weight:bold; margin-bottom:16px; }
-.trad-box { background:white; border-radius:16px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.1); margin-bottom:14px; }
-.trad-box label { font-size:12px; font-weight:bold; color:#666; display:block; margin-bottom:6px; }
-.trad-textarea { width:100%; border:1px solid #ddd; border-radius:10px; padding:12px; font-size:15px; resize:none; outline:none; font-family:inherit; line-height:1.5; }
-.trad-textarea:focus { border-color:#2196F3; }
-.trad-actions { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
-.trad-lang-btn { padding:8px 16px; border-radius:20px; border:2px solid #ddd; background:white; cursor:pointer; font-size:13px; transition:.2s; }
-.trad-lang-btn.active { border-color:#2196F3; background:#E3F2FD; color:#1565C0; font-weight:bold; }
-.trad-result-box { background:white; border-radius:16px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.1); min-height:80px; }
-.trad-result-box .result-lang { font-size:12px; font-weight:bold; color:#666; margin-bottom:8px; }
-.trad-result-box .result-text { font-size:18px; font-weight:500; color:#333; }
-.trad-result-box .result-text.placeholder { color:#bbb; font-size:14px; font-weight:normal; }
-.trad-speak { background:none; border:1px solid #ddd; border-radius:20px; padding:6px 14px; cursor:pointer; font-size:13px; margin-top:10px; }
-.trad-speak:hover { background:#f5f5f5; }
-.swap-btn { background:#f5f5f5; border:1px solid #ddd; border-radius:50%; width:38px; height:38px; cursor:pointer; font-size:18px; display:flex; align-items:center; justify-content:center; margin:0 auto 14px; }
-.swap-btn:hover { background:#e3f2fd; }
-.trad-note { font-size:12px; color:#888; text-align:center; margin-top:8px; }
+    .section-header {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
 
-/* APPRENDRE */
-.learn-wrap { padding:16px; }
-.learn-section-title { font-size:16px; font-weight:bold; margin:18px 0 10px; color:#333; display:flex; align-items:center; gap:8px; }
-.dialogue-card { background:white; border-radius:16px; padding:16px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,.1); }
-.dialogue-title { font-size:14px; font-weight:bold; color:#2196F3; margin-bottom:12px; border-bottom:2px solid #E3F2FD; padding-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
-.dialogue-line { display:flex; gap:10px; margin-bottom:10px; align-items:flex-start; }
-.dialogue-line.right { flex-direction:row-reverse; }
-.bubble { max-width:80%; border-radius:16px; padding:10px 14px; font-size:14px; line-height:1.5; }
-.bubble-left { background:#F0F4FF; border-bottom-left-radius:4px; }
-.bubble-right { background:#E3F2FD; border-bottom-right-radius:4px; text-align:right; }
-.bubble-speaker { font-size:11px; font-weight:bold; color:#888; margin-bottom:3px; }
-.bubble-fr { color:#1B5E20; font-size:12px; margin-top:4px; font-style:italic; }
-.bubble-es { color:#B71C1C; font-size:12px; margin-top:2px; font-style:italic; }
-.bubble-speak { background:none; border:none; cursor:pointer; font-size:16px; margin-top:4px; }
-.text-card { background:white; border-radius:16px; padding:16px; margin-bottom:14px; box-shadow:0 2px 8px rgba(0,0,0,.1); }
-.text-card-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
-.text-card-title { font-size:14px; font-weight:bold; color:#333; }
-.text-card-level { font-size:11px; padding:3px 10px; border-radius:20px; font-weight:bold; }
-.level-debutant { background:#E8F5E9; color:#2E7D32; }
-.level-intermediaire { background:#FFF3E0; color:#E65100; }
-.text-paragraph { font-size:14px; line-height:1.7; color:#444; margin-bottom:8px; }
-.text-translation { font-size:13px; line-height:1.6; color:#666; background:#f9f9f9; padding:10px; border-radius:8px; border-left:3px solid #2196F3; margin-top:8px; display:none; }
-.text-translation.show { display:block; }
-.show-trad-btn { font-size:12px; background:none; border:1px solid #2196F3; color:#2196F3; padding:5px 12px; border-radius:20px; cursor:pointer; margin-top:8px; }
-.mini-phrase-list { }
-.mini-phrase { background:white; border-radius:12px; padding:12px 14px; margin-bottom:8px; box-shadow:0 2px 6px rgba(0,0,0,.08); }
-.mini-phrase-fr { font-size:15px; font-weight:600; color:#333; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center; }
-.mini-phrase-en { font-size:13px; color:#1565C0; margin-bottom:2px; }
-.mini-phrase-es { font-size:13px; color:#B71C1C; }
+    .accent-line {
+      display: inline-block;
+      width: 60px;
+      height: 3px;
+      background: var(--gradient-bg);
+      border-radius: 2px;
+      margin-bottom: 1.5rem;
+    }
 
-/* BOTTOM NAV mobile */
-.bottom-nav { position:fixed; bottom:0; left:0; right:0; background:white; border-top:1px solid #eee; display:flex; z-index:150; box-shadow:0 -2px 8px rgba(0,0,0,.1); }
-.bnav-btn { flex:1; padding:10px 4px 6px; border:none; background:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; font-size:10px; color:#888; transition:.2s; }
-.bnav-btn.active { color:#2196F3; }
-.bnav-icon { font-size:22px; }
-.pb { padding-bottom:70px; }
-</style>
+    section {
+      padding: 90px 0;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    /* ─── Fade-in on scroll ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── NAVBAR ─── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 5%;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, backdrop-filter 0.3s, box-shadow 0.3s;
+    }
+    #navbar.scrolled {
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-circle {
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: var(--gradient-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+    }
+    .logo-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 0; height: 2px;
+      background: var(--gradient-bg);
+      transition: width 0.3s;
+      border-radius: 2px;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links a:hover::after { width: 100%; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      background: rgba(139,92,246,0.15);
+      border: 1px solid rgba(139,92,246,0.4);
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 28px; height: 2.5px;
+      background: var(--text-primary);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(10,10,20,0.98);
+      backdrop-filter: blur(20px);
+      padding: 1rem 5%;
+      z-index: 999;
+      border-bottom: 1px solid rgba(139,92,246,0.3);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { list-style: none; }
+    .mobile-menu ul li { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .mobile-menu ul li a {
+      display: flex;
+      align-items: center;
+      padding: 1rem 0.5rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      font-weight: 500;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.2s;
+      gap: 0.8rem;
+    }
+    .mobile-menu ul li a::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gradient-bg);
+      flex-shrink: 0;
+    }
+    .mobile-menu ul li a:hover {
+      color: var(--violet);
+      padding-left: 1rem;
+    }
+    .mobile-menu ul li:last-child { border-bottom: none; }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding-top: 68px;
+    }
+
+    /* Hero two-column layout at 1440px+ */
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      width: 100%;
+    }
+
+    .hero-left {
+      flex: 0 0 auto;
+      max-width: 580px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .hero-right {
+      display: none;
+      flex: 0 0 auto;
+    }
+
+    @media (min-width: 1200px) {
+      .hero-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* Glassmorphism tech stack card */
+    .hero-tech-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      padding: 2rem 1.8rem;
+      width: 300px;
+      position: relative;
+      box-shadow: 0 0 60px rgba(139,92,246,0.12), 0 8px 40px rgba(0,0,0,0.4);
+      animation: cardFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50%       { transform: translateY(-14px) rotate(1deg); }
+    }
+
+    .hero-tech-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1.4rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .tech-card-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .tech-card-dot.red   { background: #ff5f57; }
+    .tech-card-dot.amber { background: #febc2e; }
+    .tech-card-dot.green { background: #28c840; }
+
+    .tech-card-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-left: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .tech-snippet {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      margin-bottom: 1.4rem;
+    }
+    .tech-snippet .kw   { color: #c792ea; }
+    .tech-snippet .fn   { color: #82aaff; }
+    .tech-snippet .str  { color: #c3e88d; }
+    .tech-snippet .cm   { color: #546e7a; font-style: italic; }
+    .tech-snippet .num  { color: #f78c6c; }
+
+    .tech-badges-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.8rem;
+    }
+
+    .tech-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 0.3rem 0.75rem;
+      border-radius: 50px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      border: 1px solid;
+      animation: badgeFloat linear infinite;
+    }
+    .tech-badge.v { background: rgba(139,92,246,0.15); border-color: rgba(139,92,246,0.4); color: #a78bfa; animation-duration: 3.2s; }
+    .tech-badge.b { background: rgba(59,130,246,0.15);  border-color: rgba(59,130,246,0.4);  color: #60a5fa; animation-duration: 4.1s; }
+    .tech-badge.c { background: rgba(6,182,212,0.15);   border-color: rgba(6,182,212,0.4);   color: #67e8f9; animation-duration: 3.7s; }
+    .tech-badge.g { background: rgba(52,211,153,0.15);  border-color: rgba(52,211,153,0.4);  color: #6ee7b7; animation-duration: 4.5s; }
+    .tech-badge.o { background: rgba(251,146,60,0.15);  border-color: rgba(251,146,60,0.4);  color: #fdba74; animation-duration: 3.9s; }
+
+    @keyframes badgeFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-4px); }
+    }
+
+    /* Stagger badge float animations */
+    .tech-badge:nth-child(1) { animation-delay: 0s; }
+    .tech-badge:nth-child(2) { animation-delay: 0.4s; }
+    .tech-badge:nth-child(3) { animation-delay: 0.8s; }
+    .tech-badge:nth-child(4) { animation-delay: 1.2s; }
+    .tech-badge:nth-child(5) { animation-delay: 0.6s; }
+    .tech-badge:nth-child(6) { animation-delay: 1.0s; }
+
+    /* Decorative glow ring behind card */
+    .hero-tech-card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 26px;
+      background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(6,182,212,0.2));
+      z-index: -1;
+      opacity: 0.6;
+      filter: blur(8px);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    /* Particles */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: drift linear infinite;
+      opacity: 0;
+    }
+    @keyframes drift {
+      0%   { transform: translateY(0) translateX(0); opacity: 0; }
+      10%  { opacity: var(--op); }
+      90%  { opacity: var(--op); }
+      100% { transform: translateY(var(--dy)) translateX(var(--dx)); opacity: 0; }
+    }
+
+    /* Ambient blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.15;
+    }
+    .blob-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, #8b5cf6, transparent 70%);
+      top: -150px; left: -150px;
+      animation: blobFloat 14s ease-in-out infinite alternate;
+    }
+    .blob-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, #06b6d4, transparent 70%);
+      bottom: -100px; right: -100px;
+      animation: blobFloat 18s ease-in-out infinite alternate-reverse;
+    }
+    .blob-3 {
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, #3b82f6, transparent 70%);
+      top: 40%; left: 50%;
+      animation: blobFloat 12s ease-in-out infinite alternate;
+    }
+    @keyframes blobFloat {
+      0%   { transform: translate(0,0) scale(1); }
+      100% { transform: translate(40px, 40px) scale(1.08); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-avatar {
+      width: 130px; height: 130px;
+      border-radius: 50%;
+      background: var(--gradient-bg);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 1rem;
+      box-shadow: var(--glow-violet);
+      animation: avatarPulse 3s ease-in-out infinite alternate;
+      overflow: hidden;
+      padding: 3px;
+    }
+    .hero-avatar img {
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 5%;
+    }
+    @keyframes avatarPulse {
+      0%   { box-shadow: 0 0 20px rgba(139,92,246,0.5), 0 0 60px rgba(139,92,246,0.2); }
+      100% { box-shadow: 0 0 40px rgba(139,92,246,0.7), 0 0 100px rgba(139,92,246,0.3); }
+    }
+
+    .hero-greeting {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.0;
+      letter-spacing: -1px;
+      margin-bottom: 0.8rem;
+    }
+
+    .typewriter-wrap {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.2rem, 3vw, 1.8rem);
+      font-weight: 500;
+      color: var(--cyan);
+      height: 2.4rem;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      margin-bottom: 1.6rem;
+    }
+    #typewriter-text { }
+    .tw-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.4em;
+      background: var(--cyan);
+      border-radius: 1px;
+      animation: blink 0.9s step-end infinite;
+      margin-left: 2px;
+      vertical-align: middle;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .hero-bio {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin-bottom: 1.6rem;
+      line-height: 1.8;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+    @media (max-width: 768px) {
+      .hero-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        overflow: hidden;
+        width: 100%;
+      }
+      .hero-left {
+        width: 100%;
+        max-width: 100%;
+        padding: 0;
+        overflow: hidden;
+      }
+      .hero-bio {
+        font-size: 0.92rem;
+        max-width: 100%;
+        padding: 0;
+        text-align: center;
+        overflow-wrap: break-word;
+        word-break: break-word;
+      }
+      .hero-buttons {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      .btn-primary, .btn-ghost {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+        justify-content: center;
+      }
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex; align-items: center;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: var(--gradient-bg);
+      color: #fff;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      opacity: 0.88;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(139,92,246,0.4);
+    }
+
+    .btn-ghost {
+      display: inline-flex; align-items: center;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      background: transparent;
+      color: var(--text-primary);
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      cursor: pointer;
+    }
+    .btn-ghost:hover {
+      border-color: var(--violet);
+      background: rgba(139,92,246,0.08);
+      transform: translateY(-2px);
+    }
+
+    .btn-cv {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid rgba(6,182,212,0.5);
+      color: var(--cyan);
+      text-decoration: none;
+      transition: all 0.3s;
+      background: rgba(6,182,212,0.08);
+    }
+    .btn-cv:hover {
+      background: rgba(6,182,212,0.15);
+      border-color: var(--cyan);
+      box-shadow: 0 0 20px rgba(6,182,212,0.3);
+      transform: translateY(-2px);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .scroll-chevron {
+      width: 20px; height: 20px;
+      border-right: 2px solid var(--violet);
+      border-bottom: 2px solid var(--violet);
+      transform: rotate(45deg);
+      animation: chevron 1.6s ease-in-out infinite;
+    }
+    @keyframes chevron { 0%,100%{opacity:0.3;transform:rotate(45deg) translateY(-4px)} 50%{opacity:1;transform:rotate(45deg) translateY(4px)} }
+
+    /* ─── À PROPOS ─── */
+    #about {
+      background: var(--bg-secondary);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+      font-size: 1.02rem;
+    }
+    .about-text strong { color: var(--text-primary); }
+
+    .aba-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      border: 1px solid rgba(139,92,246,0.5);
+      background: rgba(139,92,246,0.12);
+      color: var(--violet);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 0 16px rgba(139,92,246,0.2);
+    }
+    .aba-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--violet); animation: dotPulse 2s ease-in-out infinite; }
+    @keyframes dotPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+
+    .aba-highlight {
+      padding: 1.2rem 1.5rem;
+      border-radius: 12px;
+      border: 1px solid rgba(139,92,246,0.3);
+      background: rgba(139,92,246,0.07);
+      box-shadow: 0 0 24px rgba(139,92,246,0.1);
+    }
+    .aba-highlight p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .stat-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .stat-card {
+      padding: 1.6rem 2rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--glow-violet);
+    }
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* ─── TIMELINE ─── */
+    #parcours {
+      background: var(--bg-primary);
+    }
+
+    .timeline-wrapper {
+      position: relative;
+      padding: 1rem 0;
+    }
+    /* Centre line */
+    .timeline-wrapper::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, transparent, var(--violet), var(--cyan), transparent);
+      transform: translateX(-50%);
+    }
+
+    .timeline-items {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 60px 1fr;
+      align-items: start;
+      gap: 0;
+    }
+
+    .tl-card {
+      padding: 1.4rem 1.6rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .tl-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .tl-left { grid-column: 1; padding-right: 2rem; text-align: right; }
+    .tl-left .tl-card:hover { box-shadow: var(--glow-violet); }
+
+    .tl-center {
+      grid-column: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 1.4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tl-node {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 3px solid;
+      background: var(--bg-primary);
+      position: relative;
+    }
+    .tl-node.purple {
+      border-color: var(--violet);
+      box-shadow: 0 0 0 4px rgba(139,92,246,0.15);
+      animation: nodePulse-v 2.5s ease-in-out infinite;
+    }
+    .tl-node.cyan {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 4px rgba(6,182,212,0.15);
+      animation: nodePulse-c 2.5s ease-in-out infinite;
+    }
+    @keyframes nodePulse-v {
+      0%,100%{ box-shadow: 0 0 0 4px rgba(139,92,246,0.15), 0 0 12px rgba(139,92,246,0.4); }
+      50%    { box-shadow: 0 0 0 8px rgba(139,92,246,0.05), 0 0 24px rgba(139,92,246,0.6); }
+    }
+    @keyframes nodePulse-c {
+      0%,100%{ box-shadow: 0 0 0 4px rgba(6,182,212,0.15), 0 0 12px rgba(6,182,212,0.4); }
+      50%    { box-shadow: 0 0 0 8px rgba(6,182,212,0.05), 0 0 24px rgba(6,182,212,0.6); }
+    }
+
+    .tl-right { grid-column: 3; padding-left: 2rem; }
+    .tl-right .tl-card:hover { box-shadow: var(--glow-cyan); }
+
+    .tl-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+    .tl-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+      color: var(--text-primary);
+    }
+    .tl-company {
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+    .tl-company.purple { color: var(--violet); }
+    .tl-company.cyan   { color: var(--cyan); }
+
+    .tl-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .tl-featured {
+      border-color: rgba(139,92,246,0.4) !important;
+      background: rgba(139,92,246,0.08) !important;
+    }
+    .featured-badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      background: var(--gradient-bg);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.5rem;
+    }
+
+    .tl-empty { grid-column: 3; }
+    .tl-empty-left { grid-column: 1; }
+
+    /* ─── PARCOURS JOURNEY GRID ─── */
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+    .journey-card {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+    .journey-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(139,92,246,0.2);
+    }
+    .journey-featured {
+      border-color: rgba(139,92,246,0.4);
+      box-shadow: 0 0 30px rgba(139,92,246,0.15);
+    }
+    .journey-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .journey-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 20px;
+      margin-bottom: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .journey-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.3rem;
+    }
+    .journey-org {
+      font-size: 0.88rem;
+      font-weight: 600;
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.8rem;
+    }
+    .journey-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    @media (max-width: 1024px) { .journey-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .journey-grid { grid-template-columns: 1fr; } }
+
+    /* ─── COMPÉTENCES ─── */
+    #competences {
+      background: var(--bg-secondary);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .skill-card {
+      padding: 1.8rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .skill-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--glow-violet);
+    }
+
+    .skill-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .skill-icon.purple { background: rgba(139,92,246,0.2); box-shadow: 0 0 16px rgba(139,92,246,0.2); }
+    .skill-icon.blue   { background: rgba(59,130,246,0.2);  box-shadow: 0 0 16px rgba(59,130,246,0.2); }
+    .skill-icon.cyan   { background: rgba(6,182,212,0.2);   box-shadow: 0 0 16px rgba(6,182,212,0.2); }
+    .skill-icon.grad   { background: linear-gradient(135deg, rgba(139,92,246,0.3), rgba(6,182,212,0.3)); box-shadow: 0 0 16px rgba(139,92,246,0.2); }
+    .skill-icon.gray   { background: rgba(148,163,184,0.15); }
+
+    .skill-cat {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+    .skill-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.07);
+      color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .skill-level-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .skill-bar-track {
+      height: 5px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0;
+      transition: width 1.1s cubic-bezier(.4,0,.2,1);
+    }
+    .skill-bar-fill.purple { background: linear-gradient(90deg, var(--violet), #a78bfa); }
+    .skill-bar-fill.blue   { background: linear-gradient(90deg, var(--blue), #60a5fa); }
+    .skill-bar-fill.cyan   { background: linear-gradient(90deg, var(--cyan), #67e8f9); }
+    .skill-bar-fill.grad   { background: var(--gradient-bg); }
+    .skill-bar-fill.gray   { background: linear-gradient(90deg, #64748b, #94a3b8); }
+
+    .aba-tag {
+      display: inline-block;
+      padding: 0.15rem 0.55rem;
+      border-radius: 50px;
+      background: rgba(139,92,246,0.2);
+      border: 1px solid rgba(139,92,246,0.4);
+      color: var(--violet);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Soft skills & languages */
+    .soft-skills-section {
+      margin-top: 1rem;
+      padding: 1.5rem 2rem;
+    }
+    .soft-skills-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 1rem;
+    }
+    .soft-pills {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+    }
+    .soft-pill {
+      padding: 0.35rem 1rem;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--text-primary);
+      font-size: 0.88rem;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .soft-pill:hover {
+      border-color: var(--violet);
+      background: rgba(139,92,246,0.08);
+    }
+
+    .languages-section {
+      margin-top: 1rem;
+      padding: 1.5rem 2rem;
+    }
+    .lang-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0.8rem;
+    }
+    .lang-name {
+      width: 80px;
+      font-size: 0.9rem;
+      color: var(--text-primary);
+      flex-shrink: 0;
+    }
+    .lang-dots {
+      display: flex; gap: 5px;
+    }
+    .lang-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .lang-dot.filled { background: var(--violet); box-shadow: 0 0 6px rgba(139,92,246,0.5); }
+    .lang-dot.empty  { background: rgba(255,255,255,0.1); }
+    .lang-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── PROJETS ─── */
+    #projets {
+      background: var(--bg-primary);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.8rem;
+    }
+    @media (max-width: 1024px) {
+      .projects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .project-card {
+      padding: 0;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+    }
+    .project-card.accent-purple:hover { box-shadow: 0 20px 60px rgba(139,92,246,0.3); }
+    .project-card.accent-blue:hover   { box-shadow: 0 20px 60px rgba(59,130,246,0.3); }
+    .project-card.accent-cyan:hover   { box-shadow: 0 20px 60px rgba(6,182,212,0.3); }
+    .project-card.accent-grad:hover   { box-shadow: 0 20px 60px rgba(139,92,246,0.25); }
+
+    .project-thumb {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0.7rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-thumb-purple { background: linear-gradient(135deg, rgba(139,92,246,0.25) 0%, rgba(59,130,246,0.1) 100%); }
+    .project-thumb-blue   { background: linear-gradient(135deg, rgba(59,130,246,0.25) 0%, rgba(6,182,212,0.1) 100%); }
+    .project-thumb-cyan   { background: linear-gradient(135deg, rgba(6,182,212,0.25) 0%, rgba(59,130,246,0.1) 100%); }
+    .project-thumb-grad   { background: linear-gradient(135deg, rgba(139,92,246,0.2) 0%, rgba(6,182,212,0.2) 100%); }
+
+    .project-thumb-img {
+      background: #0a0a1a;
+      padding: 0;
+    }
+    .project-thumb-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+      opacity: 0.85;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover .project-thumb-img img { opacity: 1; }
+
+
+    .project-emoji { font-size: 3.5rem; line-height: 1; }
+    .project-thumb-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+    }
+
+    /* Subtle grid overlay on thumbs */
+    .project-thumb::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .project-body {
+      padding: 1.6rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 0.6rem;
+      gap: 0.5rem;
+    }
+    .project-name {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .project-badge {
+      display: inline-block;
+      padding: 0.18rem 0.55rem;
+      border-radius: 20px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .badge-pro {
+      background: rgba(59,130,246,0.2);
+      color: var(--blue);
+      border: 1px solid rgba(59,130,246,0.3);
+    }
+
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .project-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.06);
+      color: var(--text-muted);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .project-footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .btn-project {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.45rem 1.1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-decoration: none;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .btn-project:hover {
+      border-color: var(--violet);
+      color: var(--text-primary);
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--bg-secondary);
+    }
+
+    /* Ensure contact subtitle is muted gray, not gradient/accent */
+    #contact .section-subtitle {
+      color: var(--text-muted);
+      background: none;
+      -webkit-background-clip: unset;
+      -webkit-text-fill-color: unset;
+      background-clip: unset;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .contact-info-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.4rem;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-card:hover {
+      transform: translateX(4px);
+      box-shadow: var(--glow-violet);
+    }
+
+    .contact-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: rgba(139,92,246,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-detail a,
+    .contact-detail span {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .contact-detail a:hover { color: var(--violet); }
+    .contact-detail small {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      margin-bottom: 2px;
+    }
+
+    /* Form */
+    .contact-form {
+      padding: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.93rem;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+    }
+    .form-input::placeholder,
+    .form-textarea::placeholder { color: rgba(148,163,184,0.5); }
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: var(--violet);
+      box-shadow: 0 0 0 3px rgba(139,92,246,0.15);
+      background: rgba(255,255,255,0.06);
+    }
+    .form-textarea { resize: vertical; min-height: 120px; }
+
+    .btn-submit {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 8px;
+      background: var(--gradient-bg);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-submit:hover {
+      opacity: 0.88;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(139,92,246,0.4);
+    }
+    .btn-submit:focus {
+      outline: 2px solid var(--violet);
+      outline-offset: 2px;
+    }
+    .btn-submit:active { transform: translateY(0); }
+    .mailto-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem 1rem;
+      gap: 1rem;
+    }
+    .mailto-icon { font-size: 3rem; }
+    .mailto-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .mailto-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 320px;
+      line-height: 1.6;
+    }
+    .mailto-btn {
+      display: inline-block;
+      text-decoration: none;
+      margin-top: 0.5rem;
+    }
+    .mailto-alt {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+    }
+    .mailto-email {
+      color: var(--cyan);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg-primary);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 2.5rem 5%;
+      text-align: center;
+    }
+    .footer-sep {
+      width: 80px;
+      height: 2px;
+      background: var(--gradient-bg);
+      border-radius: 2px;
+      margin: 0 auto 1.5rem;
+    }
+    .footer-social {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .footer-icon-btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .footer-icon-btn:hover {
+      border-color: var(--violet);
+      background: rgba(139,92,246,0.1);
+      transform: translateY(-2px);
+    }
+    .footer-copy {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .footer-tagline {
+      color: rgba(148,163,184,0.5);
+      font-size: 0.82rem;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      .about-grid { gap: 2.5rem; }
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 70px 0; }
+
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .about-grid { grid-template-columns: 1fr; }
+      .stat-cards { flex-direction: row; flex-wrap: wrap; }
+      .stat-card { flex: 1; min-width: 130px; }
+
+      /* Mobile timeline: single column left-aligned */
+      .timeline-wrapper::before { left: 16px; }
+      .timeline-item {
+        grid-template-columns: 32px 1fr;
+        grid-template-rows: auto auto;
+        gap: 0;
+      }
+      .tl-left {
+        grid-column: 2; grid-row: 1;
+        text-align: left;
+        padding: 0 0 0.5rem 1rem;
+      }
+      .tl-center {
+        grid-column: 1; grid-row: 1 / 3;
+        padding-top: 1.4rem;
+      }
+      .tl-right {
+        grid-column: 2; grid-row: 2;
+        padding: 0 0 0 1rem;
+      }
+      .tl-empty, .tl-empty-left { display: none; }
+
+      .skills-grid { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-form { padding: 1.5rem; }
+    }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>🌍 LinguaLearn</h1>
-  <div class="nav-btns">
-    <button class="nav-btn active" onclick="showTab('home')">🏠</button>
-    <button class="nav-btn" onclick="showTab('learn')">📚</button>
-    <button class="nav-btn" onclick="showTab('dict')">📖</button>
-    <button class="nav-btn" onclick="showTab('trad')">🔄</button>
-    <button class="nav-btn" onclick="showTab('quiz')">🧠</button>
+  <!-- ─── NAVBAR ─── -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#hero">
+      <div class="logo-circle">IE</div>
+      <span class="logo-name">Ichraq Elhantati</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#hero">Accueil</a></li>
+      <li><a href="#about">À Propos</a></li>
+      <li><a href="#parcours">Formation</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#projets">Projets</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-toggle" id="theme-toggle" title="Changer le thème">🌙</button>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <ul>
+      <li><a href="#hero" class="nav-mobile-link">Accueil</a></li>
+      <li><a href="#about" class="nav-mobile-link">À Propos</a></li>
+      <li><a href="#parcours" class="nav-mobile-link">Formation</a></li>
+      <li><a href="#competences" class="nav-mobile-link">Compétences</a></li>
+      <li><a href="#projets" class="nav-mobile-link">Projets</a></li>
+      <li><a href="#contact" class="nav-mobile-link">Contact</a></li>
+    </ul>
   </div>
-</header>
 
-<!-- HOME TAB -->
-<div id="tab-home" class="tab active pb">
-  <div class="banner">
-    <h2>Apprenez 3 langues !</h2>
-    <p>Français 🇫🇷 • Anglais 🇬🇧 • Espagnol 🇪🇸</p>
-    <div class="stats">
-      <span class="stat-chip">200+ Mots</span>
-      <span class="stat-chip">50+ Phrases</span>
-      <span class="stat-chip">8 Verbes</span>
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-bg" id="hero-bg">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
     </div>
-  </div>
-  <div class="section-title">Catégories</div>
-  <div class="grid" id="categoryGrid"></div>
-</div>
 
-<!-- APPRENDRE TAB -->
-<div id="tab-learn" class="tab pb">
-  <div class="learn-wrap">
-
-    <!-- MINI PHRASES ESSENTIELLES -->
-    <div class="learn-section-title">⚡ Phrases essentielles à mémoriser</div>
-    <div class="mini-phrase-list" id="miniPhraseList"></div>
-
-    <!-- DIALOGUES -->
-    <div class="learn-section-title">💬 Dialogues à apprendre</div>
-
-    <!-- Dialogue 1: Se présenter -->
-    <div class="dialogue-card">
-      <div class="dialogue-title">
-        👤 Se présenter — Introducing yourself
-        <button class="bubble-speak" onclick="speakDialogue('d1')" title="Écouter tout">🔊</button>
-      </div>
-      <div class="dialogue-line" id="d1-l1">
-        <div>
-          <div class="bubble bubble-left">
-            <div class="bubble-speaker">👨 Pierre</div>
-            <div>Bonjour ! Je m'appelle Pierre. Et vous ?</div>
-            <div class="bubble-fr">🇬🇧 Hello! My name is Pierre. And you?</div>
-            <div class="bubble-es">🇪🇸 ¡Hola! Me llamo Pierre. ¿Y usted?</div>
+    <div class="container hero-content">
+      <div class="hero-inner">
+        <!-- Left column: text content -->
+        <div class="hero-left">
+          <div class="hero-avatar" id="hero-avatar-wrap"><img src="photo.jpg" alt="Ichraq Elhantati" /></div>
+          <p class="hero-greeting">Bonjour, je suis</p>
+          <h1 class="hero-name gradient-text">ICHRAQ<br>ELHANTATI</h1>
+          <div class="typewriter-wrap">
+            <span id="typewriter-text"></span><span class="tw-cursor"></span>
           </div>
-          <button class="bubble-speak" onclick="speak('Bonjour ! Je m appelle Pierre. Et vous ?','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Hello! My name is Pierre. And you?','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Hola! Me llamo Pierre. Y usted?','es')">🇪🇸</button>
-        </div>
-      </div>
-      <div class="dialogue-line right">
-        <div>
-          <div class="bubble bubble-right">
-            <div class="bubble-speaker">👩 Sofia</div>
-            <div>Enchanté ! Je m'appelle Sofia. J'ai vingt ans.</div>
-            <div class="bubble-fr">🇬🇧 Nice to meet you! My name is Sofia. I am twenty years old.</div>
-            <div class="bubble-es">🇪🇸 ¡Encantada! Me llamo Sofia. Tengo veinte años.</div>
+          <p class="hero-bio">
+            Développeuse Full-Stack spécialisée dans la création d'applications web robustes et performantes, avec une formation de 8 mois en IA &amp; Automatisation.
+          </p>
+          <div class="hero-buttons">
+            <a href="#projets" class="btn-primary">Voir mes projets</a>
+            <a href="#contact" class="btn-ghost">Me contacter</a>
+            <a href="cv.pdf" download class="btn-cv">📄 Télécharger CV</a>
           </div>
-          <button class="bubble-speak" onclick="speak('Enchantée ! Je m appelle Sofia. J ai vingt ans.','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Nice to meet you! My name is Sofia. I am twenty years old.','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Encantada! Me llamo Sofia. Tengo veinte años.','es')">🇪🇸</button>
         </div>
-      </div>
-      <div class="dialogue-line">
-        <div>
-          <div class="bubble bubble-left">
-            <div class="bubble-speaker">👨 Pierre</div>
-            <div>Vous êtes d'où ? Je suis français.</div>
-            <div class="bubble-fr">🇬🇧 Where are you from? I am French.</div>
-            <div class="bubble-es">🇪🇸 ¿De dónde es usted? Soy francés.</div>
+
+        <!-- Right column: decorative tech stack card (desktop only) -->
+        <div class="hero-right">
+          <div class="hero-tech-card">
+            <div class="hero-tech-card-header">
+              <div class="tech-card-dot red"></div>
+              <div class="tech-card-dot amber"></div>
+              <div class="tech-card-dot green"></div>
+              <span class="tech-card-title">stack.py</span>
+            </div>
+            <div class="tech-snippet">
+              <div><span class="cm"># Ma stack technique</span></div>
+              <div><span class="kw">class</span> <span class="fn">Developer</span>:</div>
+              <div>&nbsp;&nbsp;<span class="fn">name</span> = <span class="str">"Ichraq"</span></div>
+              <div>&nbsp;&nbsp;<span class="fn">role</span> = <span class="str">"Full-Stack Developer"</span></div>
+              <div>&nbsp;&nbsp;<span class="fn">exp</span> = <span class="num">7</span><span class="str">+ projets</span></div>
+              <div>&nbsp;&nbsp;<span class="fn">learning</span> = <span class="str">"IA & AOT"</span></div>
+              <div>&nbsp;&nbsp;<span class="fn">available</span> = <span class="kw">True</span> <span class="cm">✓</span></div>
+            </div>
+            <div class="tech-badges-label">Tech stack</div>
+            <div class="tech-badges">
+              <span class="tech-badge g">🤖 IA & AOT</span>
+              <span class="tech-badge c">🐍 Python</span>
+              <span class="tech-badge v">⚡ PHP</span>
+              <span class="tech-badge v">🔴 Laravel</span>
+              <span class="tech-badge b">✨ JavaScript</span>
+              <span class="tech-badge o">🐘 PostgreSQL</span>
+              <span class="tech-badge o">🗄️ MySQL</span>
+            </div>
           </div>
-          <button class="bubble-speak" onclick="speak('Vous êtes d où ? Je suis français.','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Where are you from? I am French.','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('De dónde es usted? Soy francés.','es')">🇪🇸</button>
         </div>
       </div>
-      <div class="dialogue-line right">
-        <div>
-          <div class="bubble bubble-right">
-            <div class="bubble-speaker">👩 Sofia</div>
-            <div>Je suis espagnole. Je viens de Madrid.</div>
-            <div class="bubble-fr">🇬🇧 I am Spanish. I come from Madrid.</div>
-            <div class="bubble-es">🇪🇸 Soy española. Vengo de Madrid.</div>
+    </div>
+
+    <div class="scroll-indicator">
+      <div class="scroll-chevron"></div>
+    </div>
+  </section>
+
+  <!-- ─── À PROPOS ─── -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="accent-line"></div>
+        <h2 class="section-title">À <span class="gradient-text">Propos</span></h2>
+        <p class="section-subtitle">Qui suis-je et quelle est mon histoire ?</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <p>
+            Passionnée par le développement logiciel et les systèmes d'information, j'ai de l'expérience dans la création d'applications web performantes et de solutions métier robustes.
+          </p>
+          <p>
+            Formation de 8 mois en <strong>IA &amp; Automatisation chez ABA Technology</strong> — Python, Machine Learning et automatisation de processus.
+          </p>
+          <p>
+            Sérieuse et motivée, je suis soucieuse de la qualité du code et des bonnes pratiques de développement.
+          </p>
+          <div class="aba-highlight glass-card">
+            <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:0.4rem;">
+              <span style="font-size:1.4rem;">🤖</span>
+              <strong style="color:var(--text-primary);font-family:'Space Grotesk',sans-serif;">IA &amp; Automatisation</strong>
+              <span style="background:var(--gradient-bg);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:700;">ABA Technology</span>
+            </div>
+            <p style="color:var(--text-muted);font-size:0.88rem;">Formation de 8 mois · Python · Machine Learning · Automatisation de processus</p>
           </div>
-          <button class="bubble-speak" onclick="speak('Je suis espagnole. Je viens de Madrid.','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('I am Spanish. I come from Madrid.','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Soy española. Vengo de Madrid.','es')">🇪🇸</button>
         </div>
-      </div>
-    </div>
 
-    <!-- Dialogue 2: Au restaurant -->
-    <div class="dialogue-card">
-      <div class="dialogue-title">🍽️ Au restaurant — At the restaurant — En el restaurante</div>
-      <div class="dialogue-line">
-        <div>
-          <div class="bubble bubble-left">
-            <div class="bubble-speaker">🧑‍🍳 Serveur</div>
-            <div>Bonsoir ! Vous avez une réservation ?</div>
-            <div class="bubble-fr">🇬🇧 Good evening! Do you have a reservation?</div>
-            <div class="bubble-es">🇪🇸 ¡Buenas noches! ¿Tiene reserva?</div>
+        <div class="stat-cards reveal">
+          <div class="stat-card glass-card">
+            <div class="stat-number gradient-text">7+</div>
+            <div class="stat-label">Projets réalisés</div>
           </div>
-          <button class="bubble-speak" onclick="speak('Bonsoir ! Vous avez une réservation ?','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Good evening! Do you have a reservation?','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Buenas noches! Tiene reserva?','es')">🇪🇸</button>
-        </div>
-      </div>
-      <div class="dialogue-line right">
-        <div>
-          <div class="bubble bubble-right">
-            <div class="bubble-speaker">👤 Client</div>
-            <div>Non, mais une table pour deux, s'il vous plaît.</div>
-            <div class="bubble-fr">🇬🇧 No, but a table for two, please.</div>
-            <div class="bubble-es">🇪🇸 No, pero una mesa para dos, por favor.</div>
+          <div class="stat-card glass-card">
+            <div class="stat-number gradient-text">8 mois</div>
+            <div class="stat-label">Formation IA intensive</div>
           </div>
-          <button class="bubble-speak" onclick="speak('Non, mais une table pour deux, s il vous plaît.','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('No, but a table for two, please.','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('No, pero una mesa para dos, por favor.','es')">🇪🇸</button>
-        </div>
-      </div>
-      <div class="dialogue-line">
-        <div>
-          <div class="bubble bubble-left">
-            <div class="bubble-speaker">🧑‍🍳 Serveur</div>
-            <div>Bien sûr ! Que voulez-vous commander ?</div>
-            <div class="bubble-fr">🇬🇧 Of course! What would you like to order?</div>
-            <div class="bubble-es">🇪🇸 ¡Claro! ¿Qué desea pedir?</div>
+          <div class="stat-card glass-card">
+            <div class="stat-number gradient-text">2+</div>
+            <div class="stat-label">Ans d'expérience</div>
           </div>
-          <button class="bubble-speak" onclick="speak('Bien sûr ! Que voulez-vous commander ?','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Of course! What would you like to order?','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Claro! Que desea pedir?','es')">🇪🇸</button>
         </div>
       </div>
-      <div class="dialogue-line right">
-        <div>
-          <div class="bubble bubble-right">
-            <div class="bubble-speaker">👤 Client</div>
-            <div>Je voudrais du poulet et de l'eau, s'il vous plaît.</div>
-            <div class="bubble-fr">🇬🇧 I would like chicken and water, please.</div>
-            <div class="bubble-es">🇪🇸 Quisiera pollo y agua, por favor.</div>
+    </div>
+  </section>
+
+  <!-- ─── PARCOURS ─── -->
+  <section id="parcours">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="accent-line"></div>
+        <h2 class="section-title">Mon <span class="gradient-text">Parcours</span></h2>
+        <p class="section-subtitle">Formation et expériences professionnelles</p>
+      </div>
+
+      <div class="journey-grid reveal">
+
+        <div class="journey-card glass-card journey-featured">
+          <div class="journey-icon">🤖</div>
+          <div class="journey-badge">8 mois</div>
+          <div class="journey-title">IA &amp; Automatisation</div>
+          <div class="journey-org">ABA Technology</div>
+          <p class="journey-desc">Formation intensive en Intelligence Artificielle, Machine Learning et automatisation de processus métier.</p>
+        </div>
+
+        <div class="journey-card glass-card">
+          <div class="journey-icon">💻</div>
+          <div class="journey-title">Génie Logiciel</div>
+          <div class="journey-org">ENSA Kénitra</div>
+          <p class="journey-desc">Ingénierie logicielle, architecture des systèmes d'information et développement web avancé.</p>
+        </div>
+
+        <div class="journey-card glass-card">
+          <div class="journey-icon">🌐</div>
+          <div class="journey-title">Développeuse Web</div>
+          <div class="journey-org">Proxisoft</div>
+          <p class="journey-desc">Conception et développement d'une application web complète de gestion de factures en environnement professionnel.</p>
+        </div>
+
+        <div class="journey-card glass-card">
+          <div class="journey-icon">🎓</div>
+          <div class="journey-title">Développement Informatique</div>
+          <div class="journey-org">Ordiciel</div>
+          <p class="journey-desc">Fondamentaux du développement logiciel, bases de données et bonnes pratiques de programmation.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── COMPÉTENCES ─── -->
+  <section id="competences">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="accent-line"></div>
+        <h2 class="section-title">Mes <span class="gradient-text">Compétences</span></h2>
+        <p class="section-subtitle">Technologies, outils et savoir-faire</p>
+      </div>
+
+      <div class="skills-grid">
+        <!-- Back-end -->
+        <div class="skill-card glass-card reveal" data-delay="0">
+          <div class="skill-icon purple">⚙️</div>
+          <div class="skill-cat">Back-end</div>
+          <div class="skill-tags">
+            <span class="skill-tag">PHP</span>
+            <span class="skill-tag">Symfony</span>
+            <span class="skill-tag">Laravel</span>
+            <span class="skill-tag">Java</span>
           </div>
-          <button class="bubble-speak" onclick="speak('Je voudrais du poulet et de l eau, s il vous plaît.','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('I would like chicken and water, please.','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Quisiera pollo y agua, por favor.','es')">🇪🇸</button>
-        </div>
-      </div>
-      <div class="dialogue-line">
-        <div>
-          <div class="bubble bubble-left">
-            <div class="bubble-speaker">🧑‍🍳 Serveur</div>
-            <div>Très bien. C'est délicieux ici !</div>
-            <div class="bubble-fr">🇬🇧 Very good. It's delicious here!</div>
-            <div class="bubble-es">🇪🇸 Muy bien. ¡Aquí está delicioso!</div>
+          <div class="skill-level-label"><span>Avancé</span><span>85%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill purple" data-width="85"></div>
           </div>
-          <button class="bubble-speak" onclick="speak('Très bien. C est délicieux ici !','fr')">🔊</button>
         </div>
-      </div>
-    </div>
 
-    <!-- Dialogue 3: Demander le chemin -->
-    <div class="dialogue-card">
-      <div class="dialogue-title">🗺️ Demander le chemin — Asking for directions</div>
-      <div class="dialogue-line">
-        <div>
-          <div class="bubble bubble-left">
-            <div class="bubble-speaker">👤 Touriste</div>
-            <div>Excusez-moi, où est la gare, s'il vous plaît ?</div>
-            <div class="bubble-fr">🇬🇧 Excuse me, where is the train station, please?</div>
-            <div class="bubble-es">🇪🇸 Disculpe, ¿dónde está la estación, por favor?</div>
+        <!-- Front-end -->
+        <div class="skill-card glass-card reveal" data-delay="1">
+          <div class="skill-icon blue">🎨</div>
+          <div class="skill-cat">Front-end</div>
+          <div class="skill-tags">
+            <span class="skill-tag">HTML</span>
+            <span class="skill-tag">CSS3</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Bootstrap</span>
+            <span class="skill-tag">Figma</span>
           </div>
-          <button class="bubble-speak" onclick="speak('Excusez-moi, où est la gare, s il vous plaît ?','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Excuse me, where is the train station, please?','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Disculpe, donde esta la estacion, por favor?','es')">🇪🇸</button>
-        </div>
-      </div>
-      <div class="dialogue-line right">
-        <div>
-          <div class="bubble bubble-right">
-            <div class="bubble-speaker">👩 Passante</div>
-            <div>Allez tout droit, puis tournez à gauche.</div>
-            <div class="bubble-fr">🇬🇧 Go straight ahead, then turn left.</div>
-            <div class="bubble-es">🇪🇸 Vaya todo recto, luego gire a la izquierda.</div>
+          <div class="skill-level-label"><span>Intermédiaire</span><span>75%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill blue" data-width="75"></div>
           </div>
-          <button class="bubble-speak" onclick="speak('Allez tout droit, puis tournez à gauche.','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Go straight ahead, then turn left.','en')">🇬🇧</button>
-          <button class="bubble-speak" onclick="speak('Vaya todo recto, luego gire a la izquierda.','es')">🇪🇸</button>
         </div>
-      </div>
-      <div class="dialogue-line">
-        <div>
-          <div class="bubble bubble-left">
-            <div class="bubble-speaker">👤 Touriste</div>
-            <div>C'est loin d'ici ?</div>
-            <div class="bubble-fr">🇬🇧 Is it far from here?</div>
-            <div class="bubble-es">🇪🇸 ¿Está lejos de aquí?</div>
+
+        <!-- Bases de données -->
+        <div class="skill-card glass-card reveal" data-delay="2">
+          <div class="skill-icon cyan">🗄️</div>
+          <div class="skill-cat">Bases de données</div>
+          <div class="skill-tags">
+            <span class="skill-tag">MySQL</span>
+            <span class="skill-tag">PostgreSQL</span>
+            <span class="skill-tag">Doctrine ORM</span>
           </div>
-          <button class="bubble-speak" onclick="speak('C est loin d ici ?','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('Is it far from here?','en')">🇬🇧</button>
-        </div>
-      </div>
-      <div class="dialogue-line right">
-        <div>
-          <div class="bubble bubble-right">
-            <div class="bubble-speaker">👩 Passante</div>
-            <div>Non, c'est à cinq minutes à pied. Bonne journée !</div>
-            <div class="bubble-fr">🇬🇧 No, it's five minutes on foot. Have a good day!</div>
-            <div class="bubble-es">🇪🇸 No, está a cinco minutos a pie. ¡Buen día!</div>
+          <div class="skill-level-label"><span>Intermédiaire</span><span>65%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill cyan" data-width="65"></div>
           </div>
-          <button class="bubble-speak" onclick="speak('Non, c est à cinq minutes à pied. Bonne journée !','fr')">🔊</button>
-          <button class="bubble-speak" onclick="speak('No, it is five minutes on foot. Have a good day!','en')">🇬🇧</button>
+        </div>
+
+        <!-- IA & Automatisation -->
+        <div class="skill-card glass-card reveal" data-delay="3">
+          <div class="skill-icon grad">🤖</div>
+          <div class="skill-cat">IA &amp; AOT</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Machine Learning</span>
+            <span class="skill-tag">IA</span>
+            <span class="skill-tag">AOT</span>
+          </div>
+          <div class="skill-level-label"><span>En apprentissage</span><span>55%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill grad" data-width="55"></div>
+          </div>
+          <div class="aba-tag">ABA Technology</div>
+        </div>
+
+        <!-- Outils Dev -->
+        <div class="skill-card glass-card reveal" data-delay="4">
+          <div class="skill-icon blue">🛠️</div>
+          <div class="skill-cat">Outils Dev</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Composer</span>
+            <span class="skill-tag">Agile/Scrum</span>
+          </div>
+          <div class="skill-level-label"><span>Intermédiaire</span><span>70%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill blue" data-width="70"></div>
+          </div>
+        </div>
+
+        <!-- Bureautique -->
+        <div class="skill-card glass-card reveal" data-delay="5">
+          <div class="skill-icon gray">📊</div>
+          <div class="skill-cat">Bureautique</div>
+          <div class="skill-tags">
+            <span class="skill-tag">Word</span>
+            <span class="skill-tag">Excel</span>
+            <span class="skill-tag">PowerPoint</span>
+          </div>
+          <div class="skill-level-label"><span>Avancé</span><span>90%</span></div>
+          <div class="skill-bar-track">
+            <div class="skill-bar-fill gray" data-width="90"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── PROJETS ─── -->
+  <section id="projets">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="accent-line"></div>
+        <h2 class="section-title">Mes <span class="gradient-text">Projets</span></h2>
+        <p class="section-subtitle">Applications et solutions développées</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- ERP Architect -->
+        <div class="project-card glass-card accent-grad reveal">
+          <div class="project-thumb project-thumb-grad">
+            <div class="project-emoji">🏗️</div>
+            <div class="project-thumb-label">ERP Architect</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">ERP Architect</div>
+              <span class="project-badge badge-pro">⭐ Featured</span>
+            </div>
+            <p class="project-desc">Conception et développement d'une architecture ERP modulaire complète — gestion des ressources, stocks, RH et finances intégrés.</p>
+            <div class="project-tags">
+              <span class="project-tag">Laravel</span>
+              <span class="project-tag">PHP</span>
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">MySQL</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener" class="btn-project">Voir sur GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ERP RH -->
+        <div class="project-card glass-card accent-purple reveal">
+          <div class="project-thumb project-thumb-purple">
+            <div class="project-emoji">👥</div>
+            <div class="project-thumb-label">ERP RH</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">ERP Ressources Humaines</div>
+            </div>
+            <p class="project-desc">Module ERP dédié à la gestion des employés, congés, fiches de paie et organigrammes d'entreprise.</p>
+            <div class="project-tags">
+              <span class="project-tag">Laravel</span>
+              <span class="project-tag">PHP</span>
+              <span class="project-tag">MySQL</span>
+              <span class="project-tag">Bootstrap</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener" class="btn-project">Voir sur GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gestion de Factures -->
+        <div class="project-card glass-card accent-blue reveal">
+          <div class="project-thumb project-thumb-blue">
+            <div class="project-emoji">📊</div>
+            <div class="project-thumb-label">Gestion Factures</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">Gestion de Factures</div>
+              <span class="project-badge badge-pro">Expérience Pro</span>
+            </div>
+            <p class="project-desc">Système de création, suivi et tableau de bord des factures. Développé chez Proxisoft.</p>
+            <div class="project-tags">
+              <span class="project-tag">Symfony</span>
+              <span class="project-tag">PHP</span>
+              <span class="project-tag">Doctrine ORM</span>
+              <span class="project-tag">MySQL</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener" class="btn-project">Voir sur GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cabinet Dentaire -->
+        <div class="project-card glass-card accent-cyan reveal">
+          <div class="project-thumb project-thumb-cyan">
+            <div class="project-emoji">🦷</div>
+            <div class="project-thumb-label">Cabinet Dentaire</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">Cabinet Dentaire</div>
+            </div>
+            <p class="project-desc">Application web complète pour gérer les patients, le planning et les rendez-vous médicaux.</p>
+            <div class="project-tags">
+              <span class="project-tag">Symfony</span>
+              <span class="project-tag">PHP</span>
+              <span class="project-tag">MySQL</span>
+              <span class="project-tag">Bootstrap</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener" class="btn-project">Voir sur GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Application École -->
+        <div class="project-card glass-card accent-purple reveal">
+          <div class="project-thumb project-thumb-purple">
+            <div class="project-emoji">🎓</div>
+            <div class="project-thumb-label">Application École</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">Application École</div>
+            </div>
+            <p class="project-desc">Plateforme web pour gérer les informations des étudiants, les notes et les inscriptions.</p>
+            <div class="project-tags">
+              <span class="project-tag">Django</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">MySQL</span>
+              <span class="project-tag">HTML/CSS</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener" class="btn-project">Voir sur GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comptes Bancaires -->
+        <div class="project-card glass-card accent-blue reveal">
+          <div class="project-thumb project-thumb-blue">
+            <div class="project-emoji">🏦</div>
+            <div class="project-thumb-label">Comptes Bancaires</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">Comptes Bancaires</div>
+            </div>
+            <p class="project-desc">Application pour le suivi et la gestion des opérations bancaires avec interface graphique.</p>
+            <div class="project-tags">
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">Java</span>
+              <span class="project-tag">HTML/CSS</span>
+            </div>
+            <div class="project-footer">
+              <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener" class="btn-project">Voir sur GitHub →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart Hospital Monitor -->
+        <div class="project-card glass-card accent-grad reveal">
+          <div class="project-thumb project-thumb-img">
+            <img src="screenshots/hospital-monitor.jpeg" alt="Smart Hospital Monitor dashboard" />
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">🏥 Smart Hospital Monitor</div>
+              <span class="project-badge badge-pro">ABA Technology</span>
+            </div>
+            <p class="project-desc">Dashboard IoT temps réel pour la surveillance hospitalière — température, humidité, pression et alertes SOS via MQTT & ESP32.</p>
+            <div class="project-tags">
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Flask</span>
+              <span class="project-tag">MQTT</span>
+              <span class="project-tag">ESP32</span>
+              <span class="project-tag">SQLite</span>
+              <span class="project-tag">IoT</span>
+            </div>
+            <div class="project-footer">
+              <a href="screenshots/hospital-monitor.jpeg" target="_blank" rel="noopener" class="btn-project">Voir le projet →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart Stock & Storage -->
+        <div class="project-card glass-card accent-cyan reveal">
+          <div class="project-thumb project-thumb-img">
+            <img src="screenshots/smart-stock.jpeg" alt="Smart Stock & Storage dashboard" />
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <div class="project-name">🏭 Smart Stock & Storage</div>
+              <span class="project-badge badge-pro">ABA Technology</span>
+            </div>
+            <p class="project-desc">Système IoT complet de monitoring d'entrepôts : dashboard temps réel (Chart.js), API REST Node.js/Express, firmware ESP32 (DHT22 + BMP280), Supabase/PostgreSQL, alertes intelligentes et automatisation IA avec analyse OpenAI.</p>
+            <div class="project-tags">
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">Express</span>
+              <span class="project-tag">Supabase</span>
+              <span class="project-tag">PostgreSQL</span>
+              <span class="project-tag">ESP32</span>
+              <span class="project-tag">IoT</span>
+              <span class="project-tag">OpenAI</span>
+              <span class="project-tag">Chart.js</span>
+            </div>
+            <div class="project-footer">
+              <a href="screenshots/smart-stock.jpeg" target="_blank" rel="noopener" class="btn-project">Voir le projet →</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="accent-line"></div>
+        <h2 class="section-title">Me <span class="gradient-text">Contacter</span></h2>
+        <p class="section-subtitle">Disponible pour toute opportunité professionnelle.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info-cards reveal">
+          <div class="contact-card glass-card">
+            <div class="contact-icon">📧</div>
+            <div class="contact-detail">
+              <small>Email</small>
+              <a href="mailto:elhantatiichraq16@gmail.com">elhantatiichraq16@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-card glass-card">
+            <div class="contact-icon">📍</div>
+            <div class="contact-detail">
+              <small>Localisation</small>
+              <span>Rabat-Salé-Zemmour-Zaër, Maroc</span>
+            </div>
+          </div>
+          <div class="contact-card glass-card">
+            <div class="contact-icon">💼</div>
+            <div class="contact-detail">
+              <small>LinkedIn</small>
+              <a href="https://linkedin.com/in/ichraq-elhantati" target="_blank" rel="noopener">linkedin.com/in/ichraq-elhantati</a>
+            </div>
+          </div>
+          <div class="contact-card glass-card">
+            <div class="contact-icon">🐙</div>
+            <div class="contact-detail">
+              <small>GitHub</small>
+              <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener">github.com/elhantatiichraq16-web</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-form glass-card reveal">
+          <form id="contact-form" action="https://formspree.io/f/meevrdeo" method="POST">
+            <div class="form-group">
+              <label class="form-label" for="name">Nom complet</label>
+              <input class="form-input" type="text" id="name" name="name" placeholder="Votre nom complet" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="votre@email.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="sujet">Sujet</label>
+              <input class="form-input" type="text" id="sujet" name="sujet" placeholder="Objet de votre message" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea class="form-textarea" id="message" name="message" placeholder="Votre message..." required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Envoyer le message</button>
+          </form>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- TEXTES A LIRE -->
-    <div class="learn-section-title">📖 Textes à lire et comprendre</div>
-
-    <div class="text-card">
-      <div class="text-card-header">
-        <div class="text-card-title">👤 Ma famille — My family — Mi familia</div>
-        <span class="text-card-level level-debutant">Débutant</span>
-      </div>
-      <div class="text-paragraph" id="txt1-fr">
-        🇫🇷 <button class="bubble-speak" onclick="speak('Je m appelle Amina. J ai vingt cinq ans. Je suis marocaine. J habite à Casablanca. Ma famille est grande. J ai un père, une mère, deux frères et une sœur. Mon père est médecin. Ma mère est professeure. J aime ma famille.','fr')">🔊</button><br>
-        Je m'appelle Amina. J'ai vingt-cinq ans. Je suis marocaine. J'habite à Casablanca. Ma famille est grande : j'ai un père, une mère, deux frères et une sœur. Mon père est médecin. Ma mère est professeure. J'aime ma famille !
-      </div>
-      <button class="show-trad-btn" onclick="toggleTrad('txt1')">🇬🇧 Voir traduction anglaise</button>
-      <div class="text-translation" id="trad-txt1-en">
-        🇬🇧 My name is Amina. I am twenty-five years old. I am Moroccan. I live in Casablanca. My family is big: I have a father, a mother, two brothers and a sister. My father is a doctor. My mother is a teacher. I love my family!
-        <button class="bubble-speak" onclick="speak('My name is Amina. I am twenty five years old. I am Moroccan. I live in Casablanca. My family is big. I have a father, a mother, two brothers and a sister. My father is a doctor. My mother is a teacher. I love my family!','en')">🔊</button>
-      </div>
-      <button class="show-trad-btn" onclick="toggleTrad2('txt1')" style="margin-left:8px">🇪🇸 Ver traducción española</button>
-      <div class="text-translation" id="trad-txt1-es">
-        🇪🇸 Me llamo Amina. Tengo veinticinco años. Soy marroquí. Vivo en Casablanca. Mi familia es grande: tengo un padre, una madre, dos hermanos y una hermana. Mi padre es médico. Mi madre es profesora. ¡Amo a mi familia!
-        <button class="bubble-speak" onclick="speak('Me llamo Amina. Tengo veinticinco años. Soy marroquí. Vivo en Casablanca. Mi familia es grande.','es')">🔊</button>
-      </div>
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-sep"></div>
+    <div class="footer-social">
+      <a href="mailto:elhantatiichraq16@gmail.com" class="footer-icon-btn" title="Email">📧</a>
+      <a href="https://linkedin.com/in/ichraq-elhantati" target="_blank" rel="noopener" class="footer-icon-btn" title="LinkedIn">💼</a>
+      <a href="https://github.com/elhantatiichraq16-web" target="_blank" rel="noopener" class="footer-icon-btn" title="GitHub">🐙</a>
     </div>
+    <p class="footer-copy">Ichraq Elhantati &copy; 2026</p>
+    <p class="footer-tagline">Développé avec ❤️ et beaucoup de café ☕</p>
+  </footer>
 
-    <div class="text-card">
-      <div class="text-card-header">
-        <div class="text-card-title">📅 Ma journée — My day — Mi día</div>
-        <span class="text-card-level level-debutant">Débutant</span>
-      </div>
-      <div class="text-paragraph">
-        🇫🇷 <button class="bubble-speak" onclick="speak('Le matin, je me lève à sept heures. Je prends un café et du pain. Je vais au travail en bus. L après-midi, je mange de la salade et du poulet. Le soir, je regarde la télévision avec ma famille. Je me couche à vingt-deux heures.','fr')">🔊</button><br>
-        Le matin, je me lève à sept heures. Je prends un café et du pain. Je vais au travail en bus. L'après-midi, je mange de la salade et du poulet. Le soir, je regarde la télévision avec ma famille. Je me couche à vingt-deux heures.
-      </div>
-      <button class="show-trad-btn" onclick="toggleTrad('txt2')">🇬🇧 Voir traduction</button>
-      <div class="text-translation" id="trad-txt2-en">
-        🇬🇧 In the morning, I wake up at seven o'clock. I have a coffee and bread. I go to work by bus. In the afternoon, I eat salad and chicken. In the evening, I watch television with my family. I go to bed at ten o'clock.
-        <button class="bubble-speak" onclick="speak('In the morning, I wake up at seven o clock. I have a coffee and bread. I go to work by bus. In the afternoon, I eat salad and chicken. In the evening, I watch television with my family.','en')">🔊</button>
-      </div>
-      <button class="show-trad-btn" onclick="toggleTrad2('txt2')" style="margin-left:8px">🇪🇸 Ver traducción</button>
-      <div class="text-translation" id="trad-txt2-es">
-        🇪🇸 Por la mañana, me levanto a las siete. Tomo un café y pan. Voy al trabajo en autobús. Por la tarde, como ensalada y pollo. Por la noche, veo la televisión con mi familia. Me acuesto a las diez.
-        <button class="bubble-speak" onclick="speak('Por la mañana, me levanto a las siete. Tomo un café y pan. Voy al trabajo en autobús.','es')">🔊</button>
-      </div>
-    </div>
+  <script>
+    // ─── Navbar: scroll glass effect ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
 
-    <div class="text-card">
-      <div class="text-card-header">
-        <div class="text-card-title">🏙️ Ma ville — My city — Mi ciudad</div>
-        <span class="text-card-level level-intermediaire">Intermédiaire</span>
-      </div>
-      <div class="text-paragraph">
-        🇫🇷 <button class="bubble-speak" onclick="speak('J habite dans une grande ville. Il y a beaucoup de magasins, de restaurants et de parcs. Le matin, les rues sont animées. Les gens vont au travail en voiture ou en bus. Le week-end, je vais au marché avec ma mère. J aime ma ville parce qu elle est belle et vivante.','fr')">🔊</button><br>
-        J'habite dans une grande ville. Il y a beaucoup de magasins, de restaurants et de parcs. Le matin, les rues sont animées. Les gens vont au travail en voiture ou en bus. Le week-end, je vais au marché avec ma mère. J'aime ma ville parce qu'elle est belle et vivante.
-      </div>
-      <button class="show-trad-btn" onclick="toggleTrad('txt3')">🇬🇧 Voir traduction</button>
-      <div class="text-translation" id="trad-txt3-en">
-        🇬🇧 I live in a big city. There are many shops, restaurants and parks. In the morning, the streets are busy. People go to work by car or bus. On weekends, I go to the market with my mother. I love my city because it is beautiful and lively.
-        <button class="bubble-speak" onclick="speak('I live in a big city. There are many shops, restaurants and parks. In the morning, the streets are busy. People go to work by car or bus.','en')">🔊</button>
-      </div>
-      <button class="show-trad-btn" onclick="toggleTrad2('txt3')" style="margin-left:8px">🇪🇸 Ver traducción</button>
-      <div class="text-translation" id="trad-txt3-es">
-        🇪🇸 Vivo en una ciudad grande. Hay muchas tiendas, restaurantes y parques. Por la mañana, las calles están animadas. La gente va al trabajo en coche o en autobús. Los fines de semana, voy al mercado con mi madre. Amo mi ciudad porque es bonita y animada.
-        <button class="bubble-speak" onclick="speak('Vivo en una ciudad grande. Hay muchas tiendas, restaurantes y parques.','es')">🔊</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- DICTIONNAIRE TAB -->
-<div id="tab-dict" class="tab pb">
-  <div class="dict-wrap">
-    <div class="section-title" style="margin:16px 0 12px">📖 Dictionnaire</div>
-    <div class="dict-search">
-      <input type="text" id="dictInput" placeholder="Chercher un mot en FR, EN ou ES..." oninput="searchDict()">
-      <button onclick="searchDict()">🔍</button>
-    </div>
-    <div id="dictCount" class="dict-count"></div>
-    <div id="dictResult" class="dict-result"></div>
-  </div>
-</div>
-
-<!-- TRADUCTION TAB -->
-<div id="tab-trad" class="tab pb">
-  <div class="trad-wrap">
-    <div class="section-title" style="margin:16px 0 12px">🔄 Traduction</div>
-    <div class="trad-box">
-      <label id="fromLabel">🇫🇷 Français — Texte à traduire</label>
-      <textarea class="trad-textarea" id="tradInput" rows="4" placeholder="Écris un mot ou une phrase..." oninput="doTranslate()"></textarea>
-    </div>
-    <div class="trad-actions">
-      <span style="font-size:13px;color:#666;align-self:center">Traduire vers :</span>
-      <button class="trad-lang-btn active" id="btn-en" onclick="setTargetLang('en')">🇬🇧 Anglais</button>
-      <button class="trad-lang-btn" id="btn-es" onclick="setTargetLang('es')">🇪🇸 Espagnol</button>
-      <button class="trad-lang-btn" id="btn-fr" onclick="setTargetLang('fr')" style="display:none">🇫🇷 Français</button>
-    </div>
-    <div class="trad-actions" style="margin-top:-6px">
-      <span style="font-size:13px;color:#666;align-self:center">Langue source :</span>
-      <button class="trad-lang-btn active" id="src-fr" onclick="setSourceLang('fr')">🇫🇷 Français</button>
-      <button class="trad-lang-btn" id="src-en" onclick="setSourceLang('en')">🇬🇧 Anglais</button>
-      <button class="trad-lang-btn" id="src-es" onclick="setSourceLang('es')">🇪🇸 Espagnol</button>
-    </div>
-    <div class="trad-result-box" id="tradResult">
-      <div class="result-lang" id="tradResultLang">🇬🇧 Anglais</div>
-      <div class="result-text placeholder" id="tradResultText">La traduction apparaîtra ici...</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
-        <button class="trad-speak" id="tradSpeakBtn" onclick="speakTranslation()" style="display:none">🔊 Écouter</button>
-        <button class="trad-speak" onclick="copyTranslation()" style="display:none" id="tradCopyBtn">📋 Copier</button>
-      </div>
-    </div>
-    <p class="trad-note">💡 La traduction cherche dans notre base de données. Pour les mots non trouvés, elle affiche une suggestion phonétique.</p>
-  </div>
-</div>
-
-<!-- QUIZ TAB -->
-<div id="tab-quiz" class="tab pb">
-  <div class="quiz-wrap">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div style="font-size:17px;font-weight:bold">🧠 Quiz</div>
-      <span id="quizScore" style="font-weight:bold;font-size:15px">0 / 0</span>
-    </div>
-    <div class="quiz-progress"><div class="quiz-bar" id="progressBar" style="width:0%"></div></div>
-    <div class="q-card">
-      <div class="q-label" id="questionLabel">Chargement...</div>
-      <div class="q-word" id="questionWord"></div>
-      <button onclick="speakQuestion()" style="background:rgba(255,255,255,.2);border:none;color:white;margin-top:12px;padding:6px 14px;border-radius:20px;cursor:pointer;font-size:13px">🔊 Écouter</button>
-    </div>
-    <div id="optionsContainer"></div>
-    <div class="feedback" id="feedback"></div>
-    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Question suivante →</button>
-  </div>
-</div>
-
-<!-- CATEGORY MODAL -->
-<div class="modal-overlay" id="categoryModal">
-  <div class="modal">
-    <div class="modal-header" id="modalHeader">
-      <button class="back-btn" onclick="closeModal()">←</button>
-      <h2 id="modalTitle"></h2>
-    </div>
-    <input class="search-bar" type="text" placeholder="Chercher..." id="searchInput" oninput="filterWords()">
-    <div class="filter-bar" id="filterBar"></div>
-    <div id="wordList"></div>
-  </div>
-</div>
-
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-  <button class="bnav-btn active" id="bn-home" onclick="showTab('home')"><span class="bnav-icon">🏠</span>Accueil</button>
-  <button class="bnav-btn" id="bn-learn" onclick="showTab('learn')"><span class="bnav-icon">📚</span>Apprendre</button>
-  <button class="bnav-btn" id="bn-dict" onclick="showTab('dict')"><span class="bnav-icon">📖</span>Dico</button>
-  <button class="bnav-btn" id="bn-trad" onclick="showTab('trad')"><span class="bnav-icon">🔄</span>Traduire</button>
-  <button class="bnav-btn" id="bn-quiz" onclick="showTab('quiz')"><span class="bnav-icon">🧠</span>Quiz</button>
-</nav>
-
-<script>
-// ===== DATA =====
-const DATA = {
-  greetings:{title:"Salutations",icon:"👋",color:"#42A5F5",words:[
-    {fr:"Bonjour",en:"Hello / Good morning",es:"Hola / Buenos días",ex_fr:"Bonjour, comment allez-vous ?",ex_en:"Hello, how are you?",ex_es:"¡Hola, cómo estás?"},
-    {fr:"Bonsoir",en:"Good evening",es:"Buenas noches"},
-    {fr:"Au revoir",en:"Goodbye",es:"Adiós",ex_fr:"Au revoir, à bientôt !",ex_en:"Goodbye, see you soon!",ex_es:"¡Adiós, hasta pronto!"},
-    {fr:"Merci",en:"Thank you",es:"Gracias",ex_fr:"Merci beaucoup !",ex_en:"Thank you very much!",ex_es:"¡Muchas gracias!"},
-    {fr:"S'il vous plaît",en:"Please",es:"Por favor",ex_fr:"Un café, s'il vous plaît.",ex_en:"A coffee, please.",ex_es:"Un café, por favor."},
-    {fr:"Excusez-moi",en:"Excuse me",es:"Disculpe"},
-    {fr:"Désolé(e)",en:"Sorry",es:"Lo siento"},
-    {fr:"Oui",en:"Yes",es:"Sí"},
-    {fr:"Non",en:"No",es:"No"},
-    {fr:"Comment allez-vous ?",en:"How are you?",es:"¿Cómo está usted?"},
-    {fr:"Je vais bien",en:"I am fine",es:"Estoy bien"},
-    {fr:"Enchanté(e)",en:"Nice to meet you",es:"Encantado/a"},
-  ]},
-  numbers:{title:"Nombres",icon:"🔢",color:"#66BB6A",words:[
-    {fr:"0 - Zéro",en:"Zero",es:"Cero"},{fr:"1 - Un",en:"One",es:"Uno"},{fr:"2 - Deux",en:"Two",es:"Dos"},
-    {fr:"3 - Trois",en:"Three",es:"Tres"},{fr:"4 - Quatre",en:"Four",es:"Cuatro"},{fr:"5 - Cinq",en:"Five",es:"Cinco"},
-    {fr:"6 - Six",en:"Six",es:"Seis"},{fr:"7 - Sept",en:"Seven",es:"Siete"},{fr:"8 - Huit",en:"Eight",es:"Ocho"},
-    {fr:"9 - Neuf",en:"Nine",es:"Nueve"},{fr:"10 - Dix",en:"Ten",es:"Diez"},{fr:"11 - Onze",en:"Eleven",es:"Once"},
-    {fr:"12 - Douze",en:"Twelve",es:"Doce"},{fr:"15 - Quinze",en:"Fifteen",es:"Quince"},
-    {fr:"20 - Vingt",en:"Twenty",es:"Veinte"},{fr:"30 - Trente",en:"Thirty",es:"Treinta"},
-    {fr:"40 - Quarante",en:"Forty",es:"Cuarenta"},{fr:"50 - Cinquante",en:"Fifty",es:"Cincuenta"},
-    {fr:"60 - Soixante",en:"Sixty",es:"Sesenta"},{fr:"70 - Soixante-dix",en:"Seventy",es:"Setenta"},
-    {fr:"80 - Quatre-vingts",en:"Eighty",es:"Ochenta"},{fr:"90 - Quatre-vingt-dix",en:"Ninety",es:"Noventa"},
-    {fr:"100 - Cent",en:"One hundred",es:"Cien"},{fr:"1000 - Mille",en:"One thousand",es:"Mil"},
-    {fr:"Premier / Première",en:"First",es:"Primero"},{fr:"Deuxième",en:"Second",es:"Segundo"},
-    {fr:"Troisième",en:"Third",es:"Tercero"},{fr:"Dernier",en:"Last",es:"Último"},
-  ]},
-  days:{title:"Jours & Temps",icon:"📅",color:"#AB47BC",words:[
-    {fr:"Lundi",en:"Monday",es:"Lunes",ex_fr:"Je travaille le lundi.",ex_en:"I work on Monday.",ex_es:"Trabajo el lunes."},
-    {fr:"Mardi",en:"Tuesday",es:"Martes"},{fr:"Mercredi",en:"Wednesday",es:"Miércoles"},
-    {fr:"Jeudi",en:"Thursday",es:"Jueves"},{fr:"Vendredi",en:"Friday",es:"Viernes"},
-    {fr:"Samedi",en:"Saturday",es:"Sábado"},{fr:"Dimanche",en:"Sunday",es:"Domingo"},
-    {fr:"Janvier",en:"January",es:"Enero"},{fr:"Février",en:"February",es:"Febrero"},
-    {fr:"Mars",en:"March",es:"Marzo"},{fr:"Avril",en:"April",es:"Abril"},
-    {fr:"Mai",en:"May",es:"Mayo"},{fr:"Juin",en:"June",es:"Junio"},
-    {fr:"Juillet",en:"July",es:"Julio"},{fr:"Août",en:"August",es:"Agosto"},
-    {fr:"Septembre",en:"September",es:"Septiembre"},{fr:"Octobre",en:"October",es:"Octubre"},
-    {fr:"Novembre",en:"November",es:"Noviembre"},{fr:"Décembre",en:"December",es:"Diciembre"},
-    {fr:"Le Printemps",en:"Spring",es:"La Primavera"},{fr:"L'Été",en:"Summer",es:"El Verano"},
-    {fr:"L'Automne",en:"Autumn",es:"El Otoño"},{fr:"L'Hiver",en:"Winter",es:"El Invierno"},
-    {fr:"Aujourd'hui",en:"Today",es:"Hoy"},{fr:"Demain",en:"Tomorrow",es:"Mañana"},
-    {fr:"Hier",en:"Yesterday",es:"Ayer"},{fr:"Maintenant",en:"Now",es:"Ahora"},
-    {fr:"Matin",en:"Morning",es:"Mañana"},{fr:"Après-midi",en:"Afternoon",es:"Tarde"},
-    {fr:"Soir",en:"Evening",es:"Noche"},{fr:"Semaine",en:"Week",es:"Semana"},
-    {fr:"Mois",en:"Month",es:"Mes"},{fr:"Année",en:"Year",es:"Año"},
-  ]},
-  family:{title:"Famille",icon:"👨‍👩‍👧‍👦",color:"#EF5350",words:[
-    {fr:"La famille",en:"Family",es:"La familia"},{fr:"Le père",en:"Father",es:"El padre"},
-    {fr:"La mère",en:"Mother",es:"La madre"},{fr:"Le fils",en:"Son",es:"El hijo"},
-    {fr:"La fille",en:"Daughter",es:"La hija"},{fr:"Le frère",en:"Brother",es:"El hermano"},
-    {fr:"La sœur",en:"Sister",es:"La hermana"},{fr:"Le grand-père",en:"Grandfather",es:"El abuelo"},
-    {fr:"La grand-mère",en:"Grandmother",es:"La abuela"},{fr:"L'oncle",en:"Uncle",es:"El tío"},
-    {fr:"La tante",en:"Aunt",es:"La tía"},{fr:"Le cousin",en:"Cousin",es:"El primo"},
-    {fr:"Le mari",en:"Husband",es:"El marido"},{fr:"La femme",en:"Wife",es:"La esposa"},
-    {fr:"L'enfant",en:"Child",es:"El niño"},{fr:"Les parents",en:"Parents",es:"Los padres"},
-  ]},
-  colors:{title:"Couleurs",icon:"🎨",color:"#FF7043",words:[
-    {fr:"Rouge",en:"Red",es:"Rojo"},{fr:"Bleu",en:"Blue",es:"Azul"},{fr:"Vert",en:"Green",es:"Verde"},
-    {fr:"Jaune",en:"Yellow",es:"Amarillo"},{fr:"Orange",en:"Orange",es:"Naranja"},
-    {fr:"Violet",en:"Purple",es:"Morado"},{fr:"Rose",en:"Pink",es:"Rosa"},
-    {fr:"Noir",en:"Black",es:"Negro"},{fr:"Blanc",en:"White",es:"Blanco"},
-    {fr:"Gris",en:"Grey",es:"Gris"},{fr:"Marron",en:"Brown",es:"Marrón"},
-    {fr:"Or",en:"Gold",es:"Dorado"},{fr:"Argent",en:"Silver",es:"Plateado"},
-  ]},
-  animals:{title:"Animaux",icon:"🐾",color:"#26A69A",words:[
-    {fr:"Le chien",en:"Dog",es:"El perro"},{fr:"Le chat",en:"Cat",es:"El gato"},
-    {fr:"Le cheval",en:"Horse",es:"El caballo"},{fr:"La vache",en:"Cow",es:"La vaca"},
-    {fr:"Le mouton",en:"Sheep",es:"La oveja"},{fr:"Le cochon",en:"Pig",es:"El cerdo"},
-    {fr:"La poule",en:"Hen",es:"La gallina"},{fr:"Le lion",en:"Lion",es:"El león"},
-    {fr:"L'éléphant",en:"Elephant",es:"El elefante"},{fr:"Le singe",en:"Monkey",es:"El mono"},
-    {fr:"L'oiseau",en:"Bird",es:"El pájaro"},{fr:"Le poisson",en:"Fish",es:"El pez"},
-    {fr:"Le lapin",en:"Rabbit",es:"El conejo"},{fr:"La tortue",en:"Turtle",es:"La tortuga"},
-    {fr:"Le serpent",en:"Snake",es:"La serpiente"},
-  ]},
-  food:{title:"Nourriture",icon:"🍎",color:"#FFA726",words:[
-    {fr:"Le pain",en:"Bread",es:"El pan"},{fr:"Le lait",en:"Milk",es:"La leche"},
-    {fr:"L'eau",en:"Water",es:"El agua"},{fr:"Le café",en:"Coffee",es:"El café"},
-    {fr:"Le thé",en:"Tea",es:"El té"},{fr:"Le jus",en:"Juice",es:"El jugo"},
-    {fr:"La pomme",en:"Apple",es:"La manzana"},{fr:"La banane",en:"Banana",es:"El plátano"},
-    {fr:"L'orange",en:"Orange",es:"La naranja"},{fr:"La tomate",en:"Tomato",es:"El tomate"},
-    {fr:"La salade",en:"Salad",es:"La ensalada"},{fr:"Le riz",en:"Rice",es:"El arroz"},
-    {fr:"La viande",en:"Meat",es:"La carne"},{fr:"Le poulet",en:"Chicken",es:"El pollo"},
-    {fr:"Le fromage",en:"Cheese",es:"El queso"},{fr:"L'œuf",en:"Egg",es:"El huevo"},
-    {fr:"Le sucre",en:"Sugar",es:"El azúcar"},{fr:"Le sel",en:"Salt",es:"La sal"},
-    {fr:"Le beurre",en:"Butter",es:"La mantequilla"},
-  ]},
-  body:{title:"Corps humain",icon:"🫀",color:"#EC407A",words:[
-    {fr:"La tête",en:"Head",es:"La cabeza"},{fr:"L'œil",en:"Eye",es:"El ojo"},
-    {fr:"Le nez",en:"Nose",es:"La nariz"},{fr:"La bouche",en:"Mouth",es:"La boca"},
-    {fr:"L'oreille",en:"Ear",es:"La oreja"},{fr:"Les cheveux",en:"Hair",es:"El cabello"},
-    {fr:"Le cou",en:"Neck",es:"El cuello"},{fr:"L'épaule",en:"Shoulder",es:"El hombro"},
-    {fr:"Le bras",en:"Arm",es:"El brazo"},{fr:"La main",en:"Hand",es:"La mano"},
-    {fr:"Le doigt",en:"Finger",es:"El dedo"},{fr:"Le ventre",en:"Stomach",es:"El vientre"},
-    {fr:"La jambe",en:"Leg",es:"La pierna"},{fr:"Le pied",en:"Foot",es:"El pie"},
-    {fr:"Le genou",en:"Knee",es:"La rodilla"},{fr:"Le dos",en:"Back",es:"La espalda"},
-  ]},
-  house:{title:"Maison",icon:"🏠",color:"#7E57C2",words:[
-    {fr:"La maison",en:"House",es:"La casa"},{fr:"La chambre",en:"Bedroom",es:"El dormitorio"},
-    {fr:"La cuisine",en:"Kitchen",es:"La cocina"},{fr:"Le salon",en:"Living room",es:"El salón"},
-    {fr:"La salle de bain",en:"Bathroom",es:"El baño"},{fr:"La porte",en:"Door",es:"La puerta"},
-    {fr:"La fenêtre",en:"Window",es:"La ventana"},{fr:"Le lit",en:"Bed",es:"La cama"},
-    {fr:"La chaise",en:"Chair",es:"La silla"},{fr:"La table",en:"Table",es:"La mesa"},
-    {fr:"Le canapé",en:"Sofa",es:"El sofá"},{fr:"L'armoire",en:"Wardrobe",es:"El armario"},
-    {fr:"L'escalier",en:"Stairs",es:"Las escaleras"},{fr:"Le jardin",en:"Garden",es:"El jardín"},
-  ]},
-  clothes:{title:"Vêtements",icon:"👕",color:"#29B6F6",words:[
-    {fr:"Le t-shirt",en:"T-shirt",es:"La camiseta"},{fr:"Le pantalon",en:"Trousers",es:"Los pantalones"},
-    {fr:"La robe",en:"Dress",es:"El vestido"},{fr:"La jupe",en:"Skirt",es:"La falda"},
-    {fr:"La veste",en:"Jacket",es:"La chaqueta"},{fr:"Le manteau",en:"Coat",es:"El abrigo"},
-    {fr:"Les chaussures",en:"Shoes",es:"Los zapatos"},{fr:"Les chaussettes",en:"Socks",es:"Los calcetines"},
-    {fr:"Le chapeau",en:"Hat",es:"El sombrero"},{fr:"L'écharpe",en:"Scarf",es:"La bufanda"},
-    {fr:"Les gants",en:"Gloves",es:"Los guantes"},{fr:"Le pull",en:"Sweater",es:"El jersey"},
-  ]},
-  travel:{title:"Voyages",icon:"✈️",color:"#26C6DA",words:[
-    {fr:"L'aéroport",en:"Airport",es:"El aeropuerto"},{fr:"L'avion",en:"Airplane",es:"El avión"},
-    {fr:"Le train",en:"Train",es:"El tren"},{fr:"La voiture",en:"Car",es:"El coche"},
-    {fr:"Le bus",en:"Bus",es:"El autobús"},{fr:"Le taxi",en:"Taxi",es:"El taxi"},
-    {fr:"L'hôtel",en:"Hotel",es:"El hotel"},{fr:"La chambre",en:"Room",es:"La habitación"},
-    {fr:"La clé",en:"Key",es:"La llave"},{fr:"Où est",en:"Where is",es:"Dónde está"},
-    {fr:"Je voudrais réserver",en:"I would like to book",es:"Quisiera reservar"},
-    {fr:"Le passeport",en:"Passport",es:"El pasaporte"},{fr:"La valise",en:"Suitcase",es:"La maleta"},
-    {fr:"Le billet",en:"Ticket",es:"El billete"},
-  ]},
-  adjectives:{title:"Adjectifs",icon:"✨",color:"#9CCC65",words:[
-    {fr:"Grand",en:"Big / Tall",es:"Grande"},{fr:"Petit",en:"Small",es:"Pequeño"},
-    {fr:"Beau",en:"Beautiful",es:"Hermoso"},{fr:"Bon",en:"Good",es:"Bueno"},
-    {fr:"Mauvais",en:"Bad",es:"Malo"},{fr:"Chaud",en:"Hot",es:"Caliente"},
-    {fr:"Froid",en:"Cold",es:"Frío"},{fr:"Rapide",en:"Fast",es:"Rápido"},
-    {fr:"Lent",en:"Slow",es:"Lento"},{fr:"Fort",en:"Strong",es:"Fuerte"},
-    {fr:"Heureux",en:"Happy",es:"Feliz"},{fr:"Triste",en:"Sad",es:"Triste"},
-    {fr:"Fatigué",en:"Tired",es:"Cansado"},{fr:"Nouveau",en:"New",es:"Nuevo"},
-    {fr:"Vieux",en:"Old",es:"Viejo"},
-  ]},
-  phrases:{title:"Phrases utiles",icon:"💬",color:"#5C6BC0",words:[
-    {fr:"Je m'appelle...",en:"My name is...",es:"Me llamo...",cat:"Présentations"},
-    {fr:"J'ai ... ans.",en:"I am ... years old.",es:"Tengo ... años.",cat:"Présentations"},
-    {fr:"Je suis de...",en:"I am from...",es:"Soy de...",cat:"Présentations"},
-    {fr:"Je parle français.",en:"I speak French.",es:"Hablo francés.",cat:"Présentations"},
-    {fr:"Je ne comprends pas.",en:"I don't understand.",es:"No entiendo.",cat:"Demandes"},
-    {fr:"Pouvez-vous répéter ?",en:"Can you repeat?",es:"¿Puede repetir?",cat:"Demandes"},
-    {fr:"Parlez plus lentement.",en:"Please speak more slowly.",es:"Hable más despacio.",cat:"Demandes"},
-    {fr:"Qu'est-ce que ça veut dire ?",en:"What does it mean?",es:"¿Qué significa eso?",cat:"Demandes"},
-    {fr:"Une table pour deux.",en:"A table for two, please.",es:"Una mesa para dos.",cat:"Restaurant"},
-    {fr:"Je voudrais commander.",en:"I would like to order.",es:"Quisiera pedir.",cat:"Restaurant"},
-    {fr:"L'addition, s'il vous plaît.",en:"The bill, please.",es:"La cuenta, por favor.",cat:"Restaurant"},
-    {fr:"C'est délicieux !",en:"It's delicious!",es:"¡Está delicioso!",cat:"Restaurant"},
-    {fr:"Combien ça coûte ?",en:"How much does it cost?",es:"¿Cuánto cuesta?",cat:"Shopping"},
-    {fr:"C'est trop cher.",en:"It's too expensive.",es:"Es demasiado caro.",cat:"Shopping"},
-    {fr:"Je prends celui-ci.",en:"I'll take this one.",es:"Me llevo este.",cat:"Shopping"},
-    {fr:"Au secours !",en:"Help!",es:"¡Socorro!",cat:"Urgences"},
-    {fr:"Appelez la police !",en:"Call the police!",es:"¡Llame a la policía!",cat:"Urgences"},
-    {fr:"J'ai besoin d'un médecin.",en:"I need a doctor.",es:"Necesito un médico.",cat:"Urgences"},
-    {fr:"Tournez à gauche.",en:"Turn left.",es:"Gire a la izquierda.",cat:"Directions"},
-    {fr:"Tournez à droite.",en:"Turn right.",es:"Gire a la derecha.",cat:"Directions"},
-    {fr:"Allez tout droit.",en:"Go straight ahead.",es:"Vaya todo recto.",cat:"Directions"},
-  ]},
-  conjugations:{title:"Conjugaisons",icon:"📝",color:"#8D6E63",verbs:[
-    {fr:"Être",en:"To be",es:"Ser / Estar",tenses:[
-      {name:"Présent / Present / Presente",rows:[["Je / I / Yo","suis / am / soy"],["Tu / You / Tú","es / are / eres"],["Il/Elle","est / is / es"],["Nous","sommes / are / somos"],["Ils/Elles","sont / are / son"]]},
-      {name:"Passé / Past / Pasado",rows:[["Je / I / Yo","ai été / was / fui"],["Tu","as été / were / fuiste"],["Il/Elle","a été / was / fue"],["Nous","avons été / were / fuimos"],["Ils/Elles","ont été / were / fueron"]]},
-      {name:"Futur / Future / Futuro",rows:[["Je / I / Yo","serai / will be / seré"],["Tu","seras / will be / serás"],["Il/Elle","sera / will be / será"],["Nous","serons / will be / seremos"],["Ils/Elles","seront / will be / serán"]]}
-    ]},
-    {fr:"Avoir",en:"To have",es:"Tener",tenses:[
-      {name:"Présent / Present / Presente",rows:[["Je / I / Yo","ai / have / tengo"],["Tu","as / have / tienes"],["Il/Elle","a / has / tiene"],["Nous","avons / have / tenemos"],["Ils/Elles","ont / have / tienen"]]},
-      {name:"Futur / Future / Futuro",rows:[["Je / I / Yo","aurai / will have / tendré"],["Tu","auras / will have / tendrás"],["Il/Elle","aura / will have / tendrá"],["Nous","aurons / will have / tendremos"],["Ils/Elles","auront / will have / tendrán"]]}
-    ]},
-    {fr:"Aller",en:"To go",es:"Ir",tenses:[{name:"Présent / Present / Presente",rows:[["Je / I / Yo","vais / go / voy"],["Tu","vas / go / vas"],["Il/Elle","va / goes / va"],["Nous","allons / go / vamos"],["Ils/Elles","vont / go / van"]]}]},
-    {fr:"Faire",en:"To do / make",es:"Hacer",tenses:[{name:"Présent / Present / Presente",rows:[["Je / I / Yo","fais / do / hago"],["Tu","fais / do / haces"],["Il/Elle","fait / does / hace"],["Nous","faisons / do / hacemos"],["Ils/Elles","font / do / hacen"]]}]},
-    {fr:"Parler",en:"To speak",es:"Hablar",tenses:[{name:"Présent / Present / Presente",rows:[["Je / I / Yo","parle / speak / hablo"],["Tu","parles / speak / hablas"],["Il/Elle","parle / speaks / habla"],["Nous","parlons / speak / hablamos"],["Ils/Elles","parlent / speak / hablan"]]}]},
-    {fr:"Vouloir",en:"To want",es:"Querer",tenses:[{name:"Présent / Present / Presente",rows:[["Je / I / Yo","veux / want / quiero"],["Tu","veux / want / quieres"],["Il/Elle","veut / wants / quiere"],["Nous","voulons / want / queremos"],["Ils/Elles","veulent / want / quieren"]]}]},
-    {fr:"Pouvoir",en:"Can",es:"Poder",tenses:[{name:"Présent / Present / Presente",rows:[["Je / I / Yo","peux / can / puedo"],["Tu","peux / can / puedes"],["Il/Elle","peut / can / puede"],["Nous","pouvons / can / podemos"],["Ils/Elles","peuvent / can / pueden"]]}]},
-    {fr:"Savoir",en:"To know",es:"Saber",tenses:[{name:"Présent / Present / Presente",rows:[["Je / I / Yo","sais / know / sé"],["Tu","sais / know / sabes"],["Il/Elle","sait / knows / sabe"],["Nous","savons / know / sabemos"],["Ils/Elles","savent / know / saben"]]}]},
-  ]}
-};
-
-// ===== ALL WORDS (flat) =====
-let ALL_WORDS = [];
-Object.values(DATA).forEach(d => { if(d.words) ALL_WORDS.push(...d.words); });
-
-// ===== TTS =====
-let voices = [];
-window.speechSynthesis.onvoiceschanged = () => { voices = window.speechSynthesis.getVoices(); };
-setTimeout(()=>{ voices = window.speechSynthesis.getVoices(); }, 500);
-
-function getLangCode(lang) {
-  if(lang==='en') return 'en-US';
-  if(lang==='es') return 'es-ES';
-  return 'fr-FR';
-}
-
-function speak(text, lang) {
-  if(!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const utt = new SpeechSynthesisUtterance(text);
-  utt.lang = getLangCode(lang);
-  utt.rate = 0.85;
-  const v = voices.find(v => v.lang.startsWith(getLangCode(lang).split('-')[0]));
-  if(v) utt.voice = v;
-  window.speechSynthesis.speak(utt);
-}
-
-// ===== TABS =====
-function showTab(name) {
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+name).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.bnav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('bn-'+name).classList.add('active');
-  if(name==='quiz') initQuiz();
-  if(name==='dict') { document.getElementById('dictInput').focus(); searchDict(); }
-  if(name==='learn') buildMiniPhrases();
-}
-
-// ===== HOME GRID =====
-const order=['greetings','numbers','days','family','colors','animals','food','body','house','clothes','travel','adjectives','phrases','conjugations'];
-const grid=document.getElementById('categoryGrid');
-order.forEach(key=>{
-  const d=DATA[key];
-  const card=document.createElement('div');
-  card.className='cat-card';
-  card.style.background=d.color;
-  const count=d.words?d.words.length+' entrées':d.verbs.length+' verbes';
-  card.innerHTML=`<div class="cat-icon">${d.icon}</div><div><div class="cat-title">${d.title}</div><div class="cat-sub">${count}</div></div>`;
-  card.onclick=()=>openCategory(key);
-  grid.appendChild(card);
-});
-
-// ===== CATEGORY MODAL =====
-let currentWords=[], currentFilter=null;
-
-function openCategory(key) {
-  const d=DATA[key];
-  document.getElementById('modalTitle').textContent=d.icon+' '+d.title;
-  document.getElementById('modalHeader').style.background=d.color;
-  document.getElementById('searchInput').value='';
-  currentFilter=null;
-  const wordList=document.getElementById('wordList');
-  const filterBar=document.getElementById('filterBar');
-  filterBar.innerHTML='';
-
-  if(key==='conjugations'){
-    wordList.innerHTML='';
-    d.verbs.forEach((verb,i)=>{
-      const card=document.createElement('div');
-      card.className='verb-card';
-      card.innerHTML=`<div class="verb-header" onclick="toggleVerb(${i})">
-        <div class="verb-icon">📝</div>
-        <div style="flex:1">
-          <div class="verb-name">${verb.fr}</div>
-          <div class="verb-trans" style="color:#1565C0">🇬🇧 ${verb.en} <button class="speak-btn" onclick="event.stopPropagation();speak('${verb.en}','en')">🔊</button></div>
-          <div class="verb-trans" style="color:#B71C1C">🇪🇸 ${verb.es} <button class="speak-btn" onclick="event.stopPropagation();speak('${verb.es}','es')">🔊</button></div>
-        </div>
-        <span id="arrow${i}" style="font-size:16px">▼</span>
-      </div>
-      <div class="verb-body" id="verbBody${i}">
-        ${verb.tenses.map(t=>`<div class="tense-title">${t.name}</div>${t.rows.map(r=>`<div class="conj-row"><span class="conj-pron">${r[0]}</span><span class="conj-val">${r[1]}</span></div>`).join('')}`).join('')}
-      </div>`;
-      wordList.appendChild(card);
+    // ─── Hamburger menu ───
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open', open);
+      hamburger.setAttribute('aria-expanded', open);
     });
-  } else {
-    currentWords=d.words;
-    const cats=[...new Set(d.words.filter(w=>w.cat).map(w=>w.cat))];
-    cats.forEach(cat=>{
-      const chip=document.createElement('button');
-      chip.className='filter-chip'; chip.textContent=cat;
-      chip.onclick=()=>{ currentFilter=currentFilter===cat?null:cat; document.querySelectorAll('.filter-chip').forEach(c=>c.classList.remove('active')); if(currentFilter)chip.classList.add('active'); renderWords(); };
-      filterBar.appendChild(chip);
+    document.querySelectorAll('.nav-mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      });
     });
-    renderWords();
-  }
-  document.getElementById('categoryModal').classList.add('active');
-}
 
-function toggleVerb(i){ document.getElementById('verbBody'+i).classList.toggle('open'); document.getElementById('arrow'+i).textContent=document.getElementById('verbBody'+i).classList.contains('open')?'▲':'▼'; }
+    // ─── Particle system ───
+    (function spawnParticles() {
+      const bg = document.getElementById('hero-bg');
+      const colors = ['#8b5cf6','#3b82f6','#06b6d4','#a78bfa','#67e8f9'];
+      for (let i = 0; i < 28; i++) {
+        const p = document.createElement('div');
+        p.className = 'particle';
+        const size = 4 + Math.random() * 14;
+        const startX = Math.random() * 100;
+        const startY = 20 + Math.random() * 80;
+        const duration = 18 + Math.random() * 22;
+        const delay = Math.random() * -duration;
+        const dx = (Math.random() - 0.5) * 200;
+        const dy = -(200 + Math.random() * 400);
+        const op = (0.08 + Math.random() * 0.18).toFixed(2);
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        p.style.cssText = `
+          width:${size}px; height:${size}px;
+          left:${startX}%; top:${startY}%;
+          background:${color};
+          --dy:${dy}px; --dx:${dx}px; --op:${op};
+          animation-duration:${duration}s;
+          animation-delay:${delay}s;
+        `;
+        bg.appendChild(p);
+      }
+    })();
 
-function renderWords(){
-  const search=document.getElementById('searchInput').value.toLowerCase();
-  const wordList=document.getElementById('wordList');
-  wordList.innerHTML='';
-  const filtered=currentWords.filter(w=>{
-    const m=!search||w.fr.toLowerCase().includes(search)||w.en.toLowerCase().includes(search)||w.es.toLowerCase().includes(search);
-    const c=!currentFilter||w.cat===currentFilter;
-    return m&&c;
-  });
-  if(!filtered.length){wordList.innerHTML='<p style="text-align:center;color:#999;padding:40px">Aucun résultat</p>';return;}
-  filtered.forEach(w=>{
-    const frClean=w.fr.replace(/'/g,"\\'"); const enClean=w.en.replace(/'/g,"\\'"); const esClean=w.es.replace(/'/g,"\\'");
-    const card=document.createElement('div');
-    card.className='word-card';
-    card.innerHTML=`
-      <div class="lang-row">
-        <span style="font-size:18px">🇫🇷</span>
-        <span class="lang-badge" style="background:#1B5E20">FR</span>
-        <span class="lang-text">${w.fr}</span>
-        <button class="speak-btn" onclick="speak('${frClean}','fr')" title="Écouter en français">🔊</button>
-      </div>
-      <hr class="divider">
-      <div class="lang-row">
-        <span style="font-size:18px">🇬🇧</span>
-        <span class="lang-badge" style="background:#1565C0">EN</span>
-        <span class="lang-text">${w.en}</span>
-        <button class="speak-btn" onclick="speak('${enClean}','en')" title="Listen in English">🔊</button>
-      </div>
-      <div class="lang-row">
-        <span style="font-size:18px">🇪🇸</span>
-        <span class="lang-badge" style="background:#B71C1C">ES</span>
-        <span class="lang-text">${w.es}</span>
-        <button class="speak-btn" onclick="speak('${esClean}','es')" title="Escuchar en español">🔊</button>
-      </div>
-      ${w.ex_fr?`<div class="example-box">
-        <div class="example-label">💬 Exemples :</div>
-        <div class="example-line">🇫🇷 ${w.ex_fr} <button class="speak-btn" style="font-size:15px" onclick="speak('${w.ex_fr.replace(/'/g,"\\'")}','fr')">🔊</button></div>
-        ${w.ex_en?`<div class="example-line">🇬🇧 ${w.ex_en} <button class="speak-btn" style="font-size:15px" onclick="speak('${w.ex_en.replace(/'/g,"\\'")}','en')">🔊</button></div>`:''}
-        ${w.ex_es?`<div class="example-line">🇪🇸 ${w.ex_es} <button class="speak-btn" style="font-size:15px" onclick="speak('${w.ex_es.replace(/'/g,"\\'")}','es')">🔊</button></div>`:''}
-      </div>`:''}`;
-    wordList.appendChild(card);
-  });
-}
+    // ─── Dark / Light mode ───
+    const themeBtn = document.getElementById('theme-toggle');
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') { document.body.classList.add('light-mode'); themeBtn.textContent = '☀️'; }
+    themeBtn.addEventListener('click', () => {
+      const isLight = document.body.classList.toggle('light-mode');
+      themeBtn.textContent = isLight ? '☀️' : '🌙';
+      localStorage.setItem('theme', isLight ? 'light' : 'dark');
+    });
 
-function filterWords(){ renderWords(); }
-function closeModal(){ document.getElementById('categoryModal').classList.remove('active'); }
+    // ─── Typewriter effect ───
+    (function typewriter() {
+      const phrases = [
+        'Développeuse Full-Stack',
+        'Développement Web',
+        'IA & Automatisation'
+      ];
+      const el = document.getElementById('typewriter-text');
+      let phraseIdx = 0;
+      let charIdx = 0;
+      let deleting = false;
+      let pause = false;
 
-// ===== DICTIONNAIRE =====
-function searchDict(){
-  const q=document.getElementById('dictInput').value.toLowerCase().trim();
-  const container=document.getElementById('dictResult');
-  const countEl=document.getElementById('dictCount');
-  container.innerHTML='';
-  if(!q){ countEl.textContent='Tape un mot pour chercher dans les 3 langues.'; return; }
-  const results=ALL_WORDS.filter(w=>
-    w.fr.toLowerCase().includes(q)||w.en.toLowerCase().includes(q)||w.es.toLowerCase().includes(q)
-  );
-  countEl.textContent=results.length>0?`${results.length} résultat(s) trouvé(s)`:'Aucun résultat trouvé.';
-  if(!results.length) return;
-  results.forEach(w=>{
-    const frC=w.fr.replace(/'/g,"\\'"); const enC=w.en.replace(/'/g,"\\'"); const esC=w.es.replace(/'/g,"\\'");
-    const card=document.createElement('div');
-    card.className='dict-card';
-    card.innerHTML=`
-      <div class="dict-langs">
-        <div class="lang-row"><span style="font-size:18px">🇫🇷</span><span class="lang-badge" style="background:#1B5E20">FR</span><span class="lang-text">${w.fr}</span><button class="speak-btn" onclick="speak('${frC}','fr')">🔊</button></div>
-        <div class="lang-row"><span style="font-size:18px">🇬🇧</span><span class="lang-badge" style="background:#1565C0">EN</span><span class="lang-text">${w.en}</span><button class="speak-btn" onclick="speak('${enC}','en')">🔊</button></div>
-        <div class="lang-row"><span style="font-size:18px">🇪🇸</span><span class="lang-badge" style="background:#B71C1C">ES</span><span class="lang-text">${w.es}</span><button class="speak-btn" onclick="speak('${esC}','es')">🔊</button></div>
-      </div>`;
-    container.appendChild(card);
-  });
-}
+      function tick() {
+        const phrase = phrases[phraseIdx];
+        if (pause) {
+          pause = false;
+          setTimeout(tick, 1400);
+          return;
+        }
+        if (!deleting) {
+          charIdx++;
+          el.textContent = phrase.slice(0, charIdx);
+          if (charIdx === phrase.length) { deleting = true; pause = true; setTimeout(tick, 40); return; }
+          setTimeout(tick, 60 + Math.random() * 40);
+        } else {
+          charIdx--;
+          el.textContent = phrase.slice(0, charIdx);
+          if (charIdx === 0) {
+            deleting = false;
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+            setTimeout(tick, 500);
+            return;
+          }
+          setTimeout(tick, 35);
+        }
+      }
+      setTimeout(tick, 800);
+    })();
 
-// ===== TRADUCTION =====
-let srcLang='fr', tgtLang='en';
-let lastTranslation='', lastTgtLang='en';
+    // ─── Scroll reveal ───
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const delay = parseFloat(entry.target.dataset.delay || 0) * 100;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
 
-function setSourceLang(lang){
-  srcLang=lang;
-  document.querySelectorAll('[id^="src-"]').forEach(b=>b.classList.remove('active'));
-  document.getElementById('src-'+lang).classList.add('active');
-  document.getElementById('btn-fr').style.display=lang==='fr'?'none':'';
-  document.getElementById('btn-en').style.display=lang==='en'?'none':'';
-  document.getElementById('btn-es').style.display=lang==='es'?'none':'';
-  if(tgtLang===lang){ tgtLang=lang==='fr'?'en':'fr'; updateTargetBtns(); }
-  const labels={fr:'🇫🇷 Français',en:'🇬🇧 Anglais',es:'🇪🇸 Espagnol'};
-  document.getElementById('fromLabel').textContent=labels[lang]+' — Texte à traduire';
-  doTranslate();
-}
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-function setTargetLang(lang){
-  tgtLang=lang; updateTargetBtns();
-  const labels={en:'🇬🇧 Anglais',es:'🇪🇸 Espagnol',fr:'🇫🇷 Français'};
-  document.getElementById('tradResultLang').textContent=labels[lang];
-  doTranslate();
-}
+    // ─── Skill bar animation ───
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const fills = entry.target.querySelectorAll('.skill-bar-fill');
+          fills.forEach(fill => {
+            const w = fill.dataset.width;
+            setTimeout(() => { fill.style.width = w + '%'; }, 200);
+          });
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
 
-function updateTargetBtns(){
-  document.querySelectorAll('[id^="btn-"]').forEach(b=>b.classList.remove('active'));
-  const el=document.getElementById('btn-'+tgtLang);
-  if(el) el.classList.add('active');
-}
+    document.querySelectorAll('.skill-card').forEach(card => barObserver.observe(card));
 
-function doTranslate(){
-  const input=document.getElementById('tradInput').value.trim();
-  const resultEl=document.getElementById('tradResultText');
-  const speakBtn=document.getElementById('tradSpeakBtn');
-  const copyBtn=document.getElementById('tradCopyBtn');
-  if(!input){ resultEl.textContent='La traduction apparaîtra ici...'; resultEl.className='result-text placeholder'; speakBtn.style.display='none'; copyBtn.style.display='none'; lastTranslation=''; return; }
-
-  const q=input.toLowerCase();
-  const result=ALL_WORDS.find(w=>w[srcLang]&&w[srcLang].toLowerCase()===q||w[srcLang]&&w[srcLang].toLowerCase().includes(q));
-  if(result&&result[tgtLang]){
-    lastTranslation=result[tgtLang]; lastTgtLang=tgtLang;
-    resultEl.textContent=result[tgtLang]; resultEl.className='result-text';
-    speakBtn.style.display=''; copyBtn.style.display='';
-  } else {
-    const partial=ALL_WORDS.find(w=>w[srcLang]&&w[srcLang].toLowerCase().includes(q.split(' ')[0]));
-    if(partial&&partial[tgtLang]){
-      lastTranslation=partial[tgtLang]; lastTgtLang=tgtLang;
-      resultEl.innerHTML=`<span style="color:#888;font-size:13px">Résultat proche :</span><br>${partial[tgtLang]}`;
-      resultEl.className='result-text'; speakBtn.style.display=''; copyBtn.style.display='';
-    } else {
-      resultEl.textContent='Mot non trouvé dans la base. Essayez un autre mot.'; resultEl.className='result-text placeholder'; speakBtn.style.display='none'; copyBtn.style.display='none'; lastTranslation='';
-    }
-  }
-}
-
-function speakTranslation(){ if(lastTranslation) speak(lastTranslation, lastTgtLang); }
-function copyTranslation(){ if(lastTranslation) navigator.clipboard.writeText(lastTranslation).then(()=>{ document.getElementById('tradCopyBtn').textContent='✅ Copié !'; setTimeout(()=>document.getElementById('tradCopyBtn').textContent='📋 Copier',1500); }); }
-
-// ===== QUIZ =====
-let allQuizWords=[], qScore=0, qTotal=0, qCorrect='', qAnswered=false, qWord=null, qIsEn=true;
-
-function initQuiz(){
-  if(allQuizWords.length) return;
-  ['greetings','family','colors','animals','food','body','house','numbers','days'].forEach(k=>{ if(DATA[k].words) allQuizWords.push(...DATA[k].words); });
-  qScore=0; qTotal=0; nextQuestion();
-}
-
-function nextQuestion(){
-  qAnswered=false;
-  document.getElementById('feedback').className='feedback';
-  document.getElementById('nextBtn').className='next-btn';
-  qWord=allQuizWords[Math.floor(Math.random()*allQuizWords.length)];
-  qIsEn=Math.random()>0.5;
-  qCorrect=qIsEn?qWord.en:qWord.es;
-  document.getElementById('questionLabel').textContent='Comment dit-on en '+(qIsEn?'🇬🇧 Anglais':'🇪🇸 Espagnol')+' ?';
-  document.getElementById('questionWord').textContent='🇫🇷 '+qWord.fr;
-  const wrongs=new Set();
-  while(wrongs.size<3){const w=allQuizWords[Math.floor(Math.random()*allQuizWords.length)];const o=qIsEn?w.en:w.es;if(o!==qCorrect)wrongs.add(o);}
-  const options=[qCorrect,...wrongs].sort(()=>Math.random()-.5);
-  const container=document.getElementById('optionsContainer');
-  container.innerHTML='';
-  options.forEach(opt=>{
-    const btn=document.createElement('button');
-    btn.className='opt-btn'; btn.textContent=opt;
-    btn.onclick=()=>selectAnswer(opt,btn,container);
-    container.appendChild(btn);
-  });
-  document.getElementById('quizScore').textContent=qScore+' / '+qTotal;
-  document.getElementById('progressBar').style.width=(qTotal>0?Math.min((qScore/qTotal)*100,100):0)+'%';
-}
-
-function speakQuestion(){ if(qWord) speak(qWord.fr,'fr'); }
-
-function selectAnswer(choice,btn,container){
-  if(qAnswered)return; qAnswered=true; qTotal++;
-  container.querySelectorAll('.opt-btn').forEach(b=>{b.disabled=true;if(b.textContent===qCorrect)b.classList.add('correct');});
-  const fb=document.getElementById('feedback');
-  if(choice===qCorrect){qScore++;btn.classList.add('correct');fb.textContent='✅ Bravo ! Bonne réponse !';fb.className='feedback show good';speak(qCorrect,qIsEn?'en':'es');}
-  else{btn.classList.add('wrong');fb.textContent='❌ La bonne réponse était : '+qCorrect;fb.className='feedback show bad';}
-  document.getElementById('quizScore').textContent=qScore+' / '+qTotal;
-  document.getElementById('progressBar').style.width=Math.min((qScore/qTotal)*100,100)+'%';
-  document.getElementById('nextBtn').className='next-btn show';
-}
-
-// ===== APPRENDRE - Mini phrases =====
-const MINI_PHRASES = [
-  {fr:"Bonjour, comment ça va ?", en:"Hello, how are you?", es:"Hola, ¿cómo estás?"},
-  {fr:"Je m'appelle...", en:"My name is...", es:"Me llamo..."},
-  {fr:"J'ai faim.", en:"I am hungry.", es:"Tengo hambre."},
-  {fr:"J'ai soif.", en:"I am thirsty.", es:"Tengo sed."},
-  {fr:"Je suis fatigué(e).", en:"I am tired.", es:"Estoy cansado/a."},
-  {fr:"Il fait beau aujourd'hui.", en:"The weather is nice today.", es:"Hace buen tiempo hoy."},
-  {fr:"Je ne sais pas.", en:"I don't know.", es:"No sé."},
-  {fr:"Pouvez-vous m'aider ?", en:"Can you help me?", es:"¿Puede ayudarme?"},
-  {fr:"C'est combien ?", en:"How much is it?", es:"¿Cuánto es?"},
-  {fr:"Où sont les toilettes ?", en:"Where is the bathroom?", es:"¿Dónde está el baño?"},
-  {fr:"J'aime apprendre les langues.", en:"I love learning languages.", es:"Me encanta aprender idiomas."},
-  {fr:"À quelle heure part le train ?", en:"What time does the train leave?", es:"¿A qué hora sale el tren?"},
-  {fr:"Je voudrais une chambre.", en:"I would like a room.", es:"Quisiera una habitación."},
-  {fr:"Parlez-vous anglais ?", en:"Do you speak English?", es:"¿Habla usted inglés?"},
-  {fr:"Je suis désolé(e), je suis en retard.", en:"I'm sorry, I am late.", es:"Lo siento, llego tarde."},
-];
-
-function buildMiniPhrases() {
-  const list = document.getElementById('miniPhraseList');
-  if(!list || list.children.length > 0) return;
-  MINI_PHRASES.forEach(p => {
-    const frC = p.fr.replace(/'/g,"\\'"); const enC = p.en.replace(/'/g,"\\'"); const esC = p.es.replace(/'/g,"\\'");
-    const div = document.createElement('div');
-    div.className = 'mini-phrase';
-    div.innerHTML = `
-      <div class="mini-phrase-fr">${p.fr} <button class="speak-btn" onclick="speak('${frC}','fr')">🔊</button></div>
-      <div class="mini-phrase-en">🇬🇧 ${p.en} <button class="speak-btn" style="font-size:15px" onclick="speak('${enC}','en')">🔊</button></div>
-      <div class="mini-phrase-es">🇪🇸 ${p.es} <button class="speak-btn" style="font-size:15px" onclick="speak('${esC}','es')">🔊</button></div>`;
-    list.appendChild(div);
-  });
-}
-
-function toggleTrad(id) {
-  const el = document.getElementById('trad-'+id+'-en');
-  el.classList.toggle('show');
-}
-function toggleTrad2(id) {
-  const el = document.getElementById('trad-'+id+'-es');
-  el.classList.toggle('show');
-}
-
-// Init dict on load
-searchDict();
-buildMiniPhrases();
-</script>
+    // ─── Contact form ───
+    // ─── Contact form ───
+    document.getElementById('contact-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = e.target.querySelector('.btn-submit');
+      btn.textContent = 'Envoi en cours...';
+      btn.disabled = true;
+      try {
+        const res = await fetch(e.target.action, {
+          method: 'POST',
+          body: new FormData(e.target),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          btn.textContent = '✓ Message envoyé !';
+          btn.style.background = 'linear-gradient(135deg, #10b981, #06b6d4)';
+          e.target.reset();
+          setTimeout(() => { btn.textContent = 'Envoyer le message'; btn.style.background = ''; btn.disabled = false; }, 4000);
+        } else {
+          btn.textContent = 'Erreur, réessayez';
+          btn.disabled = false;
+        }
+      } catch {
+        btn.textContent = 'Erreur, réessayez';
+        btn.disabled = false;
+      }
+    });
+  </script>
 </body>
 </html>
